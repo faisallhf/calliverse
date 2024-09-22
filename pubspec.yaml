@@ -35,3 +35,9 @@ flutter:
         - asset: fonts/Mulish-Bold.ttf
         - asset: fonts/Mulish-Regular.ttf
           style: italic
+
+    - family: Poppins
+      fonts:
+        - asset: fonts/Poppins-Bold.ttf
+        - asset: fonts/Poppins-Regular.ttf
+          style: italic
