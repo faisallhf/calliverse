@@ -1,3 +1,4 @@
+import 'package:calliverse/pages/call.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -235,7 +236,12 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                context.goNamed('loginPage');
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Call(),
+                  ),
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 100),

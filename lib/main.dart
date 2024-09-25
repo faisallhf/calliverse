@@ -17,6 +17,7 @@ class _NavigationHandlerState extends State<NavigationHandler> {
     return SafeArea(
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
+        // theme: ThemeData.dark(),
         routerConfig: CalliverseRouter().router,
       ),
     );
