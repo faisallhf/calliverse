@@ -1,8 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:calliverse/pages/ai_screen.dart';
 import 'package:calliverse/pages/audio_call_screen.dart';
+import 'package:calliverse/pages/message_page.dart';
 import 'package:calliverse/pages/profile_screen.dart';
 import 'package:calliverse/pages/video_call_screen.dart';
+import 'package:flutter/material.dart';
 
 class CalllistItemWidget extends StatelessWidget {
   final String name;
@@ -101,43 +102,43 @@ class _CallState extends State<Call> {
   final List<Map<String, dynamic>> _callData = [
     {
       "name": "Pranav Ray",
-      "imagePath": "assets/images/image1.png",
+      "imagePath": "assets/image1.png",
       "callTime": "15 mins ago",
       "isMissedCall": true,
     },
     {
       "name": "Lindsey Smith",
-      "imagePath": "assets/images/image2.png",
+      "imagePath": "assets/image2.png",
       "callTime": "30 mins ago",
       "isMissedCall": false,
     },
     {
       "name": "Jocelyn Carder",
-      "imagePath": "assets/images/image3.png",
+      "imagePath": "assets/image3.png",
       "callTime": "1 hour ago",
       "isMissedCall": true,
     },
     {
       "name": "Mira Schleifer",
-      "imagePath": "assets/images/image4.png",
+      "imagePath": "assets/image4.png",
       "callTime": "2 hours ago",
       "isMissedCall": false,
     },
     {
       "name": "Zaire Vaccaro",
-      "imagePath": "assets/images/image5.png",
+      "imagePath": "assets/image5.png",
       "callTime": "15 mins ago",
       "isMissedCall": true,
     },
     {
       "name": "Phillip Dorwart",
-      "imagePath": "assets/images/image6.png",
+      "imagePath": "assets/image6.png",
       "callTime": "30 mins ago",
       "isMissedCall": false,
     },
     {
       "name": "Wilson Botosh",
-      "imagePath": "assets/images/image7.png",
+      "imagePath": "assets/image7.png",
       "callTime": "1 hour ago",
       "isMissedCall": true,
     },
@@ -156,7 +157,7 @@ class _CallState extends State<Call> {
       ).then((value) {
         // Reset back to Calls after returning from ChatbotScreen
         setState(() {
-          _selectedIndex = 1; // Go back to Calls
+          _selectedIndex = 0; // Go back to Calls
         });
       });
     }
@@ -167,7 +168,7 @@ class _CallState extends State<Call> {
       ).then((value) {
         // Reset back to Calls after returning from ChatbotScreen
         setState(() {
-          _selectedIndex = 1; // Go back to Calls
+          _selectedIndex = 0; // Go back to Calls
         });
       });
     }
@@ -176,7 +177,8 @@ class _CallState extends State<Call> {
   Widget _buildScreen(int index) {
     switch (index) {
       case 0:
-        return const Center(child: Text('Messages Screen'));
+        // return const Center(child: Text('Messages Screen'));
+        return MessagePage();
       case 1:
         return _buildCallsScreen(); // Calls screen
       case 3:
@@ -297,14 +299,16 @@ class _CallState extends State<Call> {
                   ],
                 )
               : null,
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          print('Call button pressed');
-        },
-        child: const Icon(Icons.add_call, color: Colors.white),
-        backgroundColor: Colors.blue,
-        shape: const CircleBorder(),
-      ),
+      floatingActionButton: _selectedIndex == 1 // Show only on Calls page
+          ? FloatingActionButton(
+              onPressed: () {
+                print('Call button pressed');
+              },
+              child: const Icon(Icons.add_call, color: Colors.white),
+              backgroundColor: Colors.blue,
+              shape: const CircleBorder(),
+            )
+          : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
     );
   }
