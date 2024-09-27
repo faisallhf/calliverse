@@ -205,7 +205,7 @@ class ChatbotScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(
                         left: 16, right: 3, bottom: 8), // Horizontal margin
                     decoration: BoxDecoration(
-                      color: Color(0xffC4C4C433).withOpacity(0.2),
+                      color: Color(0xffF7F7FC3).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Padding(

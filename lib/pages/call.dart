@@ -1,5 +1,6 @@
 import 'package:calliverse/pages/ai_screen.dart';
 import 'package:calliverse/pages/audio_call_screen.dart';
+import 'package:calliverse/pages/meetings_screen.dart';
 import 'package:calliverse/pages/message_page.dart';
 import 'package:calliverse/pages/profile_screen.dart';
 import 'package:calliverse/pages/video_call_screen.dart';
@@ -172,6 +173,7 @@ class _CallState extends State<Call> {
         });
       });
     }
+    
   }
 
   Widget _buildScreen(int index) {
@@ -182,7 +184,8 @@ class _CallState extends State<Call> {
       case 1:
         return _buildCallsScreen(); // Calls screen
       case 3:
-        return const Center(child: Text('Meetings Screen'));
+        return MeetingsScreen();
+        //  const Center(child: Text('Meetings Screen'));
       case 4:
         return const Center(child: Text('Profile Screen'));
       default:
