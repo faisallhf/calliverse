@@ -4,6 +4,7 @@ class ChatbotScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 56,
@@ -233,17 +234,20 @@ class ChatbotScreen extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(bottom: 8),
-                  child: CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.send,
-                          color: Colors.white), // Icon color
-                      // splashColor: Colors.transparent, // Remove splash color
-                    ),
-                  ),
-                ),
+  margin: const EdgeInsets.only(bottom: 8),
+  child: CircleAvatar(
+                                backgroundColor: Colors.blue,
+                                child: IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(
+                                      Icons.send,
+                                      color: Colors.white), // Icon color
+                                  // splashColor: Colors.transparent, // Remove splash color
+                                ),
+                              ),
+ 
+),
+
               ],
             ),
           )

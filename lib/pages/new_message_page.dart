@@ -17,13 +17,35 @@ class NewMessagePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('New Message'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
         elevation: 0,
+        toolbarHeight: 96,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        leadingWidth: 40,
+        titleSpacing: 0,
+        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 18,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+            // Handle back button action
+          },
+        ),
+        title: const Text(
+          'New Messages',
+          style: TextStyle(
+            color: Color(0xff0f1828),
+            fontFamily: 'Poppins',
+            fontSize: 18,
+          ),
+        ),
         actions: [
           IconButton(
-            icon: Icon(Icons.search),
+            icon: Icon(Icons.search, color: Colors.black),
             onPressed: () {
               // Search functionality
             },
@@ -33,35 +55,38 @@ class NewMessagePage extends StatelessWidget {
       body: ListView.builder(
         itemCount: contacts.length + 1, // +1 for the "Add New Contact" option
         itemBuilder: (context, index) {
-          if (index == 0) {
-            // The "Add New Contact" option
-            return ListTile(
-              leading: CircleAvatar(
-                backgroundColor: Colors.blue,
-                child: Icon(Icons.person_add, color: Colors.white),
-              ),
-              title: Text("Add New Contact"),
-              onTap: () {
-                // Navigate to the "Add New Contact" screen
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddContact()),
-                );
-              },
-            );
-          } else {
-            // Contacts list
-            return ListTile(
-              leading: CircleAvatar(
-                backgroundImage: AssetImage(contacts[index - 1]['image']!),
-                radius: 30,
-              ),
-              title: Text(contacts[index - 1]['name']!),
-              onTap: () {
-                // Handle contact selection
-              },
-            );
-          }
+          return Column(
+            children: [
+              if (index == 0) ...[
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundColor: Colors.blue,
+                    child: Icon(Icons.person_add, color: Colors.white),
+                  ),
+                  title: Text("Add New Contact"),
+                  onTap: () {
+                    // Navigate to the "Add New Contact" screen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => AddContact()),
+                    );
+                  },
+                ),
+              ] else ...[
+                ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: AssetImage(contacts[index - 1]['image']!),
+                    radius: 30,
+                  ),
+                  title: Text(contacts[index - 1]['name']!),
+                  onTap: () {
+                    // Handle contact selection
+                  },
+                ),
+              ],
+              SizedBox(height: 10), // Space between items
+            ],
+          );
         },
       ),
     );
