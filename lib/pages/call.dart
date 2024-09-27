@@ -97,48 +97,48 @@ class Call extends StatefulWidget {
 }
 
 class _CallState extends State<Call> {
-  int _selectedIndex = 1; // Default to Calls screen
+  int _selectedIndex = 0; // Default to Calls screen
 
   final List<Map<String, dynamic>> _callData = [
     {
       "name": "Pranav Ray",
-      "imagePath": "assets/image1.png",
+      "imagePath": "assets/images/image1.png",
       "callTime": "15 mins ago",
       "isMissedCall": true,
     },
     {
       "name": "Lindsey Smith",
-      "imagePath": "assets/image2.png",
+      "imagePath": "assets/images/image2.png",
       "callTime": "30 mins ago",
       "isMissedCall": false,
     },
     {
       "name": "Jocelyn Carder",
-      "imagePath": "assets/image3.png",
+      "imagePath": "assets/images/image3.png",
       "callTime": "1 hour ago",
       "isMissedCall": true,
     },
     {
       "name": "Mira Schleifer",
-      "imagePath": "assets/image4.png",
+      "imagePath": "assets/images/image4.png",
       "callTime": "2 hours ago",
       "isMissedCall": false,
     },
     {
       "name": "Zaire Vaccaro",
-      "imagePath": "assets/image5.png",
+      "imagePath": "assets/images/image5.png",
       "callTime": "15 mins ago",
       "isMissedCall": true,
     },
     {
       "name": "Phillip Dorwart",
-      "imagePath": "assets/image6.png",
+      "imagePath": "assets/images/image6.png",
       "callTime": "30 mins ago",
       "isMissedCall": false,
     },
     {
       "name": "Wilson Botosh",
-      "imagePath": "assets/image7.png",
+      "imagePath": "assets/images/image7.png",
       "callTime": "1 hour ago",
       "isMissedCall": true,
     },
@@ -219,6 +219,9 @@ class _CallState extends State<Call> {
                         color: Colors.black,
                       ),
                       onPressed: () {
+                        setState(() {
+                              _selectedIndex = 0;
+                        });
                         // Handle back button action
                       },
                     ),
