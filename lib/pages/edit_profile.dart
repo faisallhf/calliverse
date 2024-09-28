@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl_phone_field/intl_phone_field.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -85,20 +86,31 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 keyboardType: TextInputType.url),
             const SizedBox(height: 30),
             // Save Button
-            ElevatedButton(
-              onPressed: () {
-                // Handle save action
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.blue,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 120, vertical: 18),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
+            Center(
+              child: SizedBox(
+                width: double.infinity, // Full width as per the input fields
+                height: 50, // Adjust height
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF095DEC), // Background color
+                    foregroundColor: Colors.white, // Text color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30), // Rounded edges
+                    ),
+                  ),
+                  child: Text(
+                    'Save',
+                    style: TextStyle(
+                      fontFamily: 'Mulish',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
                 ),
               ),
-              child: const Text('Save',
-                  style: TextStyle(color: Colors.white, fontSize: 16)),
             ),
           ],
         ),
@@ -114,7 +126,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
       child: Container(
         height: 45, // Set the height for the container
         decoration: BoxDecoration(
-          color: Colors.grey[200],
+          color: Colors.grey[300],
           borderRadius: BorderRadius.circular(5),
         ),
         child: TextField(
@@ -139,61 +151,21 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   // Helper method to build the phone number field with country code and flag
   Widget _buildPhoneNumberField() {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 16.0),
-      child: Row(
-        children: [
-          // Country code display with flag
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
-            decoration: BoxDecoration(
-              color: Colors.grey[200],
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Row(
-              children: [
-                Image.asset(
-                  'assets/images/Flag.png', // Replace with your own flag image
-                  width: 24,
-                  height: 24,
+    return  IntlPhoneField(
+              decoration: InputDecoration(
+                labelText: 'Phone Number',
+                labelStyle: const TextStyle(color: Colors.grey),
+                filled: true,
+                fillColor: Colors.grey[300],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(5.0),
+                  borderSide: BorderSide.none,
                 ),
-                const SizedBox(width: 8),
-                const Text(
-                  '+1', // Set your country code here
-                  style: TextStyle(fontSize: 16, color: Colors.black),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(width: 10),
-          // Phone number input
-          Expanded(
-            flex: 4,
-            child: Container(
-              height: 45, // Set the height for the container
-              decoration: BoxDecoration(
-                color: Colors.grey[200],
-                borderRadius: BorderRadius.circular(5),
               ),
-              child: TextField(
-                controller: phoneController,
-                keyboardType: TextInputType.phone,
-                style: const TextStyle(color: Colors.grey), // Grey text color
-                decoration: InputDecoration(
-                  hintText: 'Phone Number',
-                  hintStyle: const TextStyle(color: Colors.grey),
-                  border: InputBorder.none, // No border
-                  contentPadding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                ),
-                onChanged: (text) {
-                  setState(() {}); // To refresh the state
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+              initialCountryCode: 'US',
+              style: const TextStyle(color: Colors.grey), // Default set to USA
+              onChanged: (phone) {
+                print(phone.completeNumber); // You can use this number
+              },
+            );}
 }

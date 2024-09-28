@@ -5,11 +5,34 @@ class AddContact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text('New Contact'),
-        backgroundColor: Colors.white,
-        foregroundColor: Colors.black,
         elevation: 0,
+        toolbarHeight: 96,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        leadingWidth: 40,
+        titleSpacing: 0,
+        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 18,
+            color: Colors.black,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+            // Handle back button action
+          },
+        ),
+        title: const Text(
+          'New Contact',
+          style: TextStyle(
+            color: Color(0xff0f1828),
+            fontFamily: 'Poppins',
+            fontSize: 18,
+          ),
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -21,9 +44,9 @@ class AddContact extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'First Name (Required)',
                 filled: true,
-                fillColor: Colors.grey[100],
+                fillColor: Colors.grey.shade300,
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(5.0),
                   borderSide: BorderSide.none,
                 ),
               ),
@@ -35,9 +58,9 @@ class AddContact extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Last Name (Optional)',
                 filled: true,
-                fillColor: Colors.grey[100],
+                fillColor: Colors.grey[300],
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(5.0),
                   borderSide: BorderSide.none,
                 ),
               ),
@@ -49,9 +72,9 @@ class AddContact extends StatelessWidget {
               decoration: InputDecoration(
                 labelText: 'Phone Number',
                 filled: true,
-                fillColor: Colors.grey[100],
+                fillColor: Colors.grey[300],
                 border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(10.0),
+                  borderRadius: BorderRadius.circular(5.0),
                   borderSide: BorderSide.none,
                 ),
               ),
@@ -65,22 +88,25 @@ class AddContact extends StatelessWidget {
 
             // Save Button
             Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  // Handle the save operation
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  padding: EdgeInsets.symmetric(horizontal: 40, vertical: 15),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+              child: SizedBox(
+                width: double.infinity, // Full width as per the input fields
+                height: 50, // Adjust height
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF095DEC), // Background color
+                    foregroundColor: Colors.white, // Text color
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30), // Rounded edges
+                    ),
                   ),
-                ),
-                child: Text(
-                  'Save',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18,
+                  child: Text(
+                    'Save',
+                    style: TextStyle(
+                      fontFamily: 'Mulish',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

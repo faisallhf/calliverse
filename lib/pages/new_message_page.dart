@@ -11,6 +11,7 @@ class NewMessagePage extends StatelessWidget {
     {"name": "Miracle Dorwart", "image": "assets/images/n6.png"},
     {"name": "Mira Press", "image": "assets/images/n7.png"},
     {"name": "Jakob Herwitz", "image": "assets/images/n8.png"},
+    {"name": "Angel Carder", "image": "assets/images/n5.png"},
   ];
 
   @override
@@ -53,6 +54,7 @@ class NewMessagePage extends StatelessWidget {
         ],
       ),
       body: ListView.builder(
+        physics: BouncingScrollPhysics(),
         itemCount: contacts.length + 1, // +1 for the "Add New Contact" option
         itemBuilder: (context, index) {
           return Column(
@@ -60,10 +62,11 @@ class NewMessagePage extends StatelessWidget {
               if (index == 0) ...[
                 ListTile(
                   leading: CircleAvatar(
-                    backgroundColor: Colors.blue,
-                    child: Icon(Icons.person_add, color: Colors.white),
+                    radius: 30,
+                    backgroundColor: Color(0xff095DEC),
+                    child: Icon(Icons.person_add_alt_rounded, color: Colors.white),
                   ),
-                  title: Text("Add New Contact"),
+                  title: Text("Add New Contact",style: TextStyle(fontSize: 15,fontFamily: 'Poppins',fontWeight: FontWeight.w600),),
                   onTap: () {
                     // Navigate to the "Add New Contact" screen
                     Navigator.push(
@@ -72,13 +75,14 @@ class NewMessagePage extends StatelessWidget {
                     );
                   },
                 ),
+                SizedBox(height: 20),
               ] else ...[
                 ListTile(
                   leading: CircleAvatar(
                     backgroundImage: AssetImage(contacts[index - 1]['image']!),
                     radius: 30,
                   ),
-                  title: Text(contacts[index - 1]['name']!),
+                  title: Text(contacts[index - 1]['name']!,style: TextStyle(fontSize: 15,fontFamily: 'Inter',fontWeight: FontWeight.w700),),
                   onTap: () {
                     // Handle contact selection
                   },

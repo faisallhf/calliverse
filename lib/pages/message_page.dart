@@ -67,21 +67,21 @@ class MessagePage extends StatelessWidget {
           centerTitle: false,
           backgroundColor: Colors.transparent,
           elevation: 0,
-          title:  Padding(
+          title: Padding(
             padding: const EdgeInsets.only(top: 25.0),
             child: Text(
-                    "Messages",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'Mulish',
-                    ),
-                  ),
+              "Messages",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+                fontFamily: 'Mulish',
+              ),
+            ),
           ),
           flexibleSpace: Container(
             decoration: BoxDecoration(
-              color:  Color(0xff095DEC),
+              color: Color(0xff095DEC),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),
                 bottomRight: Radius.circular(20),
@@ -91,13 +91,12 @@ class MessagePage extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-               
                 SizedBox(height: 10),
                 // Search bar inside AppBar
                 TextField(
                   decoration: InputDecoration(
                     hintText: 'Search',
-                    hintStyle: TextStyle(color:Colors.grey ),
+                    hintStyle: TextStyle(color: Colors.grey),
                     prefixIcon: Icon(Icons.search, color: Colors.grey),
                     filled: true,
                     fillColor: Colors.white,
@@ -155,12 +154,15 @@ class MessagePage extends StatelessWidget {
                     ],
                   ),
                   onTap: () {
-                    // Navigate to DetailScreen with specific details
+                    // Navigate to DetailPage with specific user details
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => DetailPage(
-                          chatDetails: chats[index],
+                          chatDetails: {
+                            "name": chats[index]["name"], // User's name
+                            "imagePath": chats[index]["image"], // User's image path
+                          },
                         ),
                       ),
                     );
@@ -181,7 +183,10 @@ class MessagePage extends StatelessWidget {
             ),
           );
         },
-        child: Icon(Icons.edit_outlined,color: Colors.white,),
+        child: Icon(
+          Icons.edit_outlined,
+          color: Colors.white,
+        ),
         backgroundColor: Color(0xff095DEC),
       ),
     );

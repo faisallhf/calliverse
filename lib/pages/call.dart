@@ -1,7 +1,7 @@
 import 'package:calliverse/pages/ai_screen.dart';
 import 'package:calliverse/pages/audio_call_screen.dart';
 
-import 'package:calliverse/pages/meeting_screen.dart';
+import 'package:calliverse/pages/meetings_screen.dart';
 
 import 'package:calliverse/pages/message_page.dart';
 import 'package:calliverse/pages/profile_screen.dart';
@@ -145,6 +145,13 @@ class _CallState extends State<Call> {
       "callTime": "1 hour ago",
       "isMissedCall": true,
     },
+    {
+      "name": "Wilson Botosh",
+      "imagePath": "assets/images/image7.png",
+      "callTime": "1 hour ago",
+      "isMissedCall": true,
+    },
+    
   ];
 
   void _onItemTapped(int index) {
@@ -228,8 +235,6 @@ class _CallState extends State<Call> {
                       ),
                       onPressed: () {
                         setState(() {
-                          _selectedIndex = 0;
-
                           _selectedIndex = 0;
                         });
                         // Handle back button action

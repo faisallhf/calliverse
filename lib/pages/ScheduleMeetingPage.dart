@@ -1,4 +1,4 @@
-import 'package:calliverse/pages/MeetingDetails.dart';
+import 'package:calliverse/pages/meeting_details.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 
@@ -16,7 +16,6 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
 
   final TextEditingController _titleController = TextEditingController();
   final TextEditingController _descriptionController = TextEditingController();
-  final TextEditingController _notesController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -120,7 +119,7 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
                       // Handle the scheduling logic here
                        Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => MeetingDetailsScreen()),
+        MaterialPageRoute(builder: (context) => MeetingDetails()),
       );
                     },
                     child: Text("Schedule",style: TextStyle(color: Colors.white,fontFamily: 'Mulish',fontSize: 16,fontWeight: FontWeight.w600),),
