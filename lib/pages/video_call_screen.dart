@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
 
-class VideoCallScreen extends StatelessWidget {
+class VideoCallScreen extends StatefulWidget {
+  @override
+  _VideoCallScreenState createState() => _VideoCallScreenState();
+}
+
+class _VideoCallScreenState extends State<VideoCallScreen> {
+  double top = 430; // initial vertical position of the image
+  double left = 30; // initial horizontal position of the image
+
+  void updatePosition(Offset delta) {
+    setState(() {
+      // Update position based on the user's drag
+      top += delta.dy;
+      left += delta.dx;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -14,8 +30,7 @@ class VideoCallScreen extends StatelessWidget {
               child: Container(
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(
-                        'assets/images/imagevideo.png'), // Background image
+                    image: AssetImage('assets/images/imagevideo.png'), // Background image
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -56,13 +71,22 @@ class VideoCallScreen extends StatelessWidget {
               ],
             ),
 
-            // Bottom left corner image
+            // Movable Bottom left corner image
             Positioned(
-              top: 430,
-              right: 30,
-              child: Container(
-                child: Image.asset(
-                    'assets/images/imagevideo.png'), // Video or profile image
+              top: top,
+              left: left,
+              child: GestureDetector(
+                onPanUpdate: (details) {
+                  // Update position as the user drags
+                  updatePosition(details.delta);
+                },
+                child: Container(
+                  child: Image.asset(
+                    'assets/images/imagevideo.png', // Video or profile image
+                    width: 160, // Set the desired width
+                    height: 180, // Set the desired height
+                  ),
+                ),
               ),
             ),
 

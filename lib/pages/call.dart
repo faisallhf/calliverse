@@ -1,6 +1,8 @@
 import 'package:calliverse/pages/ai_screen.dart';
 import 'package:calliverse/pages/audio_call_screen.dart';
+
 import 'package:calliverse/pages/meeting_screen.dart';
+
 import 'package:calliverse/pages/message_page.dart';
 import 'package:calliverse/pages/profile_screen.dart';
 import 'package:calliverse/pages/video_call_screen.dart';
@@ -184,7 +186,11 @@ class _CallState extends State<Call> {
         return _buildCallsScreen(); // Calls screen
       case 3:
         return MeetingsScreen();
+
       //  const Center(child: Text('Meetings Screen'));
+
+      //  const Center(child: Text('Meetings Screen'));
+
       case 4:
         return const Center(child: Text('Profile Screen'));
       default:
@@ -222,6 +228,8 @@ class _CallState extends State<Call> {
                       ),
                       onPressed: () {
                         setState(() {
+                          _selectedIndex = 0;
+
                           _selectedIndex = 0;
                         });
                         // Handle back button action

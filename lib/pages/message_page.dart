@@ -1,5 +1,5 @@
-import 'package:calliverse/pages/detail_page.dart';
 import 'package:flutter/material.dart';
+import 'package:calliverse/pages/detail_page.dart';
 import 'package:calliverse/pages/new_message_page.dart';
 
 class MessagePage extends StatelessWidget {
@@ -60,29 +60,60 @@ class MessagePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Messages", style: TextStyle(color: Colors.white)),
-        backgroundColor: Colors.blue,
-        elevation: 0,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(160.0), // Adjust the height as needed
+        child: AppBar(
+          automaticallyImplyLeading: false,
+          centerTitle: false,
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          title:  Padding(
+            padding: const EdgeInsets.only(top: 25.0),
+            child: Text(
+                    "Messages",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'Mulish',
+                    ),
+                  ),
+          ),
+          flexibleSpace: Container(
+            decoration: BoxDecoration(
+              color:  Color(0xff095DEC),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+            padding: const EdgeInsets.only(left: 16, right: 16, bottom: 26),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+               
+                SizedBox(height: 10),
+                // Search bar inside AppBar
+                TextField(
+                  decoration: InputDecoration(
+                    hintText: 'Search',
+                    hintStyle: TextStyle(color:Colors.grey ),
+                    prefixIcon: Icon(Icons.search, color: Colors.grey),
+                    filled: true,
+                    fillColor: Colors.white,
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                      borderSide: BorderSide.none,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
       ),
       body: Column(
         children: [
-          // Search bar
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: TextField(
-              decoration: InputDecoration(
-                hintText: 'Search',
-                prefixIcon: Icon(Icons.search),
-                filled: true,
-                fillColor: Colors.white,
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(30.0),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-            ),
-          ),
           Expanded(
             child: ListView.builder(
               itemCount: chats.length,
@@ -141,6 +172,7 @@ class MessagePage extends StatelessWidget {
         ],
       ),
       floatingActionButton: FloatingActionButton(
+        shape: CircleBorder(),
         onPressed: () {
           Navigator.push(
             context,
@@ -149,8 +181,8 @@ class MessagePage extends StatelessWidget {
             ),
           );
         },
-        child: Icon(Icons.edit),
-        backgroundColor: Colors.blue,
+        child: Icon(Icons.edit_outlined,color: Colors.white,),
+        backgroundColor: Color(0xff095DEC),
       ),
     );
   }
