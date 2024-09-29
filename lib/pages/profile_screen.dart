@@ -1,4 +1,5 @@
 import 'package:calliverse/pages/ThemeProvider.dart';
+import 'package:calliverse/pages/connection_page.dart';
 import 'package:calliverse/pages/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -50,10 +51,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
           child: Column(
             children: [
               // Circular Avatar
-              const Center(
+              Center(
                 child: CircleAvatar(
+                  backgroundColor: themeProvider.isDarkMode?Colors.transparent:Colors.transparent,
                   radius: 50,
-                  backgroundImage: AssetImage('assets/images/image4.png'),
+                  backgroundImage: const AssetImage('assets/images/image4.png'),
                 ),
               ),
               const SizedBox(height: 15),
@@ -176,7 +178,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                  textColor: themeProvider.isDarkMode?Colors.white:Colors.black,
                 iconColor:themeProvider.isDarkMode?Colors.white:Colors.black ,
                  trailing: Icon(Icons.arrow_forward_ios, size: 16, color: themeProvider.isDarkMode ? Colors.white : Colors.black),
-                onTap: () {},
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:(context)=>ConnectionPage()));
+                },
               ),
               const SizedBox(height: 10),
               OptionTile(
@@ -216,6 +220,7 @@ class OptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: onTap,
       child: Padding(
@@ -235,9 +240,9 @@ class OptionTile extends StatelessWidget {
                 trailing ??  Icon(Icons.arrow_forward_ios, size: 16,),
               ],
             ),
-            const Divider(
-              thickness: 1,
-              color: Color(0xffDDDDDD),
+             Divider(
+              thickness: 0.5,
+              color:themeProvider.isDarkMode?Colors.transparent: Color(0xffDDDDDD),
             ),
           ],
         ),

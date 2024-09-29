@@ -1,33 +1,37 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ChatbotScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
+      backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Color(0xffF7F7FC),
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 56,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor:themeProvider.isDarkMode ? Color(0xff020520) :  Colors.white,
         leadingWidth: 40,
         titleSpacing: 0,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_outlined,
             size: 18,
-            color: Colors.black,
+            color:  themeProvider.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           'Juliabot',
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            color: Color(0xff0f1828),
+            color: themeProvider.isDarkMode ? Colors.white : Color(0xff0f1828),
             fontFamily: 'Poppins',
             fontSize: 18,
           ),
@@ -36,7 +40,7 @@ class ChatbotScreen extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
             child: IconButton(
-              icon: const Icon(Icons.search_outlined, color: Colors.black),
+              icon: Icon(Icons.search_outlined, color: themeProvider.isDarkMode ? Colors.white : Colors.black,),
               onPressed: () {
                 print('Mute pressed');
               },
@@ -62,13 +66,20 @@ class ChatbotScreen extends StatelessWidget {
                   Text(
                     'Welcome to Juliabot',
                     style: TextStyle(
-                      fontSize: 23,
+                      fontFamily: 'Mulish',
+                      fontSize: 24,
                       fontWeight: FontWeight.w700,
+                      color: themeProvider.isDarkMode?Colors.white:Colors.black
                     ),
                   ),
                   const SizedBox(height: 10),
                   Text(
-                      'Ask me anything what\'s are on \nyour mind. Am here to assist you!'),
+                      'Ask me anything what\'s are on \nyour mind. Am here to assist you!',
+                      style: TextStyle(
+fontFamily: 'Mulish',
+fontSize: 14,
+color:themeProvider.isDarkMode?Colors.white:Colors.black 
+                      ),),
                   const SizedBox(height: 10),
                   // Suggested questions
                   Column(
@@ -81,11 +92,11 @@ class ChatbotScreen extends StatelessWidget {
                                 vertical: 6,
                                 horizontal: 16), // Horizontal margin
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color:themeProvider.isDarkMode?Color(0xff3E3E6766).withOpacity(0.4): Colors.white,
                               borderRadius: BorderRadius.circular(25),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
+                                  color:themeProvider.isDarkMode?Colors.transparent: Colors.grey.withOpacity(0.2),
                                   spreadRadius: 3,
                                   blurRadius: 5,
                                   offset: const Offset(0, 3),
@@ -95,10 +106,10 @@ class ChatbotScreen extends StatelessWidget {
                             // Use MediaQuery to set dynamic width with margins
                             width: MediaQuery.of(context).size.width -
                                 48, // 16 margin on each side
-                            child: const Center(
+                            child:  Center(
                               child: Text(
                                 'Explain Quantum Physics',
-                                style: TextStyle(color: Color(0xff3E3E3E)),
+                                style: TextStyle(color:themeProvider.isDarkMode?Colors.white: Color(0xff3E3E3E)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -109,11 +120,11 @@ class ChatbotScreen extends StatelessWidget {
                                 vertical: 6,
                                 horizontal: 16), // Horizontal margin
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: themeProvider.isDarkMode?Color(0xff3E3E6766).withOpacity(0.4): Colors.white,
                               borderRadius: BorderRadius.circular(25),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
+                                  color:themeProvider.isDarkMode?Colors.transparent: Colors.grey.withOpacity(0.2),
                                   spreadRadius: 3,
                                   blurRadius: 5,
                                   offset: const Offset(0, 3),
@@ -123,10 +134,10 @@ class ChatbotScreen extends StatelessWidget {
                             // Use MediaQuery to set dynamic width with margins
                             width: MediaQuery.of(context).size.width -
                                 48, // 16 margin on each side
-                            child: const Center(
+                            child: Center(
                               child: Text(
                                 'Write a tweet about global warming',
-                                style: TextStyle(color: Color(0xff3E3E3E)),
+                                style: TextStyle(color:themeProvider.isDarkMode?Colors.white: Color(0xff3E3E3E)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -137,11 +148,11 @@ class ChatbotScreen extends StatelessWidget {
                                 vertical: 6,
                                 horizontal: 16), // Horizontal margin
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color:themeProvider.isDarkMode?Color(0xff3E3E6766).withOpacity(0.4): Colors.white,
                               borderRadius: BorderRadius.circular(25),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
+                                  color:themeProvider.isDarkMode?Colors.transparent: Colors.grey.withOpacity(0.2),
                                   spreadRadius: 3,
                                   blurRadius: 5,
                                   offset: const Offset(0, 3),
@@ -151,10 +162,10 @@ class ChatbotScreen extends StatelessWidget {
                             // Use MediaQuery to set dynamic width with margins
                             width: MediaQuery.of(context).size.width -
                                 48, // 16 margin on each side
-                            child: const Center(
+                            child: Center(
                               child: Text(
                                 'Write a poem about flower and love',
-                                style: TextStyle(color: Color(0xff3E3E3E)),
+                                style: TextStyle(color:themeProvider.isDarkMode?Colors.white: Color(0xff3E3E3E)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -165,11 +176,11 @@ class ChatbotScreen extends StatelessWidget {
                                 vertical: 6,
                                 horizontal: 16), // Horizontal margin
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color:themeProvider.isDarkMode?Color(0xff3E3E6766).withOpacity(0.4): Colors.white,
                               borderRadius: BorderRadius.circular(25),
                               boxShadow: [
                                 BoxShadow(
-                                  color: Colors.grey.withOpacity(0.2),
+                                  color:themeProvider.isDarkMode?Colors.transparent: Colors.grey.withOpacity(0.2),
                                   spreadRadius: 3,
                                   blurRadius: 5,
                                   offset: const Offset(0, 3),
@@ -179,10 +190,10 @@ class ChatbotScreen extends StatelessWidget {
                             // Use MediaQuery to set dynamic width with margins
                             width: MediaQuery.of(context).size.width -
                                 48, // 16 margin on each side
-                            child: const Center(
+                            child: Center(
                               child: Text(
                                 'Write a rap song lyrics about',
-                                style: TextStyle(color: Color(0xff3E3E3E)),
+                                style: TextStyle(color:themeProvider.isDarkMode?Colors.white: Color(0xff3E3E3E)),
                                 textAlign: TextAlign.center,
                               ),
                             ),
@@ -197,7 +208,7 @@ class ChatbotScreen extends StatelessWidget {
           ),
           // Text field for user input
           BottomAppBar(
-            color: Colors.white,
+            color:  themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
             child: Row(
               children: [
                 Expanded(
@@ -205,7 +216,7 @@ class ChatbotScreen extends StatelessWidget {
                     margin: const EdgeInsets.only(
                         left: 16, right: 3, bottom: 8), // Horizontal margin
                     decoration: BoxDecoration(
-                      color: Color(0xffF7F7FC3).withOpacity(0.2),
+                      color:themeProvider.isDarkMode?Color(0xff3E3E6766).withOpacity(0.4): Color(0xffF7F7FC3).withOpacity(0.2),
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: Padding(

@@ -205,6 +205,12 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
           ),
         ),
         daysOfWeekStyle: DaysOfWeekStyle(
+          weekdayStyle: TextStyle(
+                    color: themeProvider.isDarkMode ? Colors.white : const Color(0xFF6A6A6A),
+                  ),
+                   weekendStyle: TextStyle(
+                    color: themeProvider.isDarkMode ? Colors.white : const Color(0xFF6A6A6A),
+                  ),
           decoration: BoxDecoration(
             color: themeProvider.isDarkMode 
             ? Colors.transparent 
@@ -240,7 +246,7 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
         // ),
         Row(
           children: [
-            _buildDropdownTimePicker(),
+            _buildDropdownTimePicker(themeProvider),
             SizedBox(width: 8),
             _buildAmPmSelector("AM", _isAm),
             // SizedBox(width: 8),
@@ -251,7 +257,7 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
     );
   }
 
-  Widget _buildDropdownTimePicker() {
+  Widget _buildDropdownTimePicker(dynamic themeProvider) {
     String formattedTime = _formatTime();
     List<String> timeOptions = _generateTimeOptions();
     if (!timeOptions.contains(formattedTime)) {
@@ -259,15 +265,20 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
     }
 
     return DropdownButton<String>(
-      iconEnabledColor: Color(0xffF0F3F7),
-      focusColor: Color(0xffF0F3F7),
-      dropdownColor: Color(0xffF0F3F7),
-      iconDisabledColor: Color(0xffF0F3F7),
+      iconEnabledColor:  themeProvider.isDarkMode 
+            ? Color(0xFFFCFCFC):Color(0xff3E3E67),
+      focusColor:  themeProvider.isDarkMode 
+            ? Color(0xFFFCFCFC):Color(0xff3E3E67),
+      dropdownColor:  themeProvider.isDarkMode 
+            ?Color(0xff3E3E67): Color(0xFFFCFCFC),
+      iconDisabledColor:  themeProvider.isDarkMode 
+             ? Color(0xFFFCFCFC):Color(0xff3E3E67),
       value: formattedTime,
       items: timeOptions.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Text(value,style: TextStyle(color: themeProvider.isDarkMode 
+            ? Color(0xFFFCFCFC):Color(0xff3E3E67),),),
         );
       }).toList(),
       onChanged: (String? newValue) {

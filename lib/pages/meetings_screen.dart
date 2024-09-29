@@ -35,8 +35,9 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final bgColor = themeProvider.isDarkMode ? Color(0xff3E3E6766) : Color(0xffFCFCFC);
-
+    final bgColor = themeProvider.isDarkMode
+                            ? Color(0xff3E3E6766)
+                            : Color(0xffF7F7FC);
     return Scaffold(
       backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
       appBar: AppBar(
@@ -169,9 +170,9 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
               decoration: BoxDecoration(
                 color: bgColor, // Same background for the container and calendar
                 border: Border.all(
-                  color: themeProvider.isDarkMode
-                      ? Color(0xff3E3E67).withOpacity(0.4)
-                      : Color(0xffDEDEDE), // Border for the container
+                  color: themeProvider.isDarkMode 
+          ? Color(0xff3E3E67).withOpacity(0.4) 
+          : Color(0xffDEDEDE), // Border for the container
                   width: 2,
                 ),
                 borderRadius: BorderRadius.circular(8),
@@ -205,13 +206,13 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
                     shape: BoxShape.circle,
                   ),
                   outsideDecoration: BoxDecoration(
-                    color: bgColor, // Same background as container
+                    color: Colors.transparent, // Same background as container
                   ),
                   defaultDecoration: BoxDecoration(
-                    color: bgColor, // Same background as container
+                    color: Colors.transparent, // Same background as container
                   ),
                   disabledDecoration: BoxDecoration(
-                    color: bgColor, // Same background as container
+                    color: Colors.transparent, // Same background as container
                   ),
                 ),
                 headerStyle: HeaderStyle(
@@ -223,6 +224,9 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
                   rightChevronIcon: const Icon(Icons.chevron_right, color: Colors.blue),
                 ),
                 daysOfWeekStyle: DaysOfWeekStyle(
+                  decoration: BoxDecoration(
+                    color: Colors.transparent,
+                  ),
                   weekdayStyle: TextStyle(
                     color: themeProvider.isDarkMode ? Colors.white : const Color(0xFF6A6A6A),
                   ),

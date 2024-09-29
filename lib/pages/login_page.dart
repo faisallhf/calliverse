@@ -9,31 +9,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
   String? _emailError;
   String? _passwordError;
 
-  String? _validateEmail(String value) {
-    if (value.isEmpty) {
-      return 'Please enter your email or phone';
-    }
-    // You can add additional validation if you want to separate email and phone logic
-    return null;
-  }
 
-  String? _validatePassword(String value) {
-    if (value.isEmpty) {
-      return 'Please enter your password';
-    }
-    if (value.length < 8) {
-      return 'Password must be at least 8 characters long';
-    }
-    if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-      return 'Password must contain at least one special character';
-    }
-    return null;
-  }
 
   // void _onSubmit() {
   //   setState(() {
