@@ -65,23 +65,32 @@ class _EmailSignupPageState extends State<EmailSignupPage> {
       context.push('/otpverification_page/Email/${_emailController.text}');
     }
   }
+  // void _onSubmit() {
+  //   context.push('/otpverification_page/Email/${_emailController.text}');
+  // }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
-        centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {
-            context.goNamed('connection_page');
-          },
-          child: Icon(
-            Icons.arrow_back_ios_new,
+        toolbarHeight: 56,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        leadingWidth: 40,
+        titleSpacing: 0,
+        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 18,
             color: Colors.black,
-            size: 24,
           ),
+          onPressed: () {
+            context.pushNamed('connection_page');
+          },
         ),
       ),
       body: Padding(
@@ -130,7 +139,7 @@ class _EmailSignupPageState extends State<EmailSignupPage> {
                             fontSize: 14,
                           ),
                           filled: true,
-                          fillColor: Color(0xFFF7F7FC),
+                          fillColor: Colors.grey[300],
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
@@ -163,7 +172,8 @@ class _EmailSignupPageState extends State<EmailSignupPage> {
                             color: Color(0xffADB5BD),
                             fontSize: 14,
                           ),
-                          fillColor: Color(0xFFF7F7FC),
+                          filled: true,
+                          fillColor: Colors.grey[300],
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),
@@ -196,7 +206,8 @@ class _EmailSignupPageState extends State<EmailSignupPage> {
                             color: Color(0xffADB5BD),
                             fontSize: 14,
                           ),
-                          fillColor: Color(0xFFF7F7FC),
+                          filled: true,
+                          fillColor: Colors.grey[300],
                           border: OutlineInputBorder(
                             borderSide: BorderSide.none,
                           ),

@@ -35,15 +35,19 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  void _onSubmit() {
-    setState(() {
-      _emailError = _validateEmail(_emailController.text.trim());
-      _passwordError = _validatePassword(_passwordController.text.trim());
-    });
+  // void _onSubmit() {
+  //   setState(() {
+  //     _emailError = _validateEmail(_emailController.text.trim());
+  //     _passwordError = _validatePassword(_passwordController.text.trim());
+  //   });
 
-    if (_emailError == null && _passwordError == null) {
-      context.pushNamed('subscriptionPage');
-    }
+  //   if (_emailError == null && _passwordError == null) {
+  //     context.pushNamed('subscriptionPage');
+  //   }
+  // }
+
+  void _onSubmit() {
+    context.pushNamed('subscriptionPage');
   }
 
   @override
@@ -52,18 +56,22 @@ class _LoginPageState extends State<LoginPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xFFFFFFFF),
       appBar: AppBar(
-        backgroundColor: Color(0xFFFFFFFF),
         elevation: 0,
-        centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {
-            context.goNamed('connection_page');
-          },
-          child: Icon(
-            Icons.arrow_back_ios_new,
+        toolbarHeight: 56,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        leadingWidth: 40,
+        titleSpacing: 0,
+        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 18,
             color: Colors.black,
-            size: 24,
           ),
+          onPressed: () {
+            context.pushNamed('connection_page');
+          },
         ),
       ),
       body: Column(
@@ -91,7 +99,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 TextField(
-                  controller: _emailController,
+                  // controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: "Enter your email or phone",
@@ -101,7 +109,7 @@ class _LoginPageState extends State<LoginPage> {
                       fontSize: 14,
                     ),
                     filled: true,
-                    fillColor: Color(0xFFF7F7FC),
+                    fillColor: Colors.grey[300],
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                     ),
@@ -112,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 10),
                 TextField(
-                  controller: _passwordController,
+                  // controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
@@ -121,7 +129,8 @@ class _LoginPageState extends State<LoginPage> {
                       color: Color(0xffADB5BD),
                       fontSize: 14,
                     ),
-                    fillColor: Color(0xFFF7F7FC),
+                    filled: true,
+                    fillColor: Colors.grey[300],
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                     ),

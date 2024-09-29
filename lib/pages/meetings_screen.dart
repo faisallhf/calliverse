@@ -2,11 +2,9 @@ import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:calliverse/pages/schedule_meeting_details.dart';
 import 'package:calliverse/pages/audio_call_screen.dart';
 import 'package:calliverse/pages/call.dart';
-// import 'package:calliverse/pages/message_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
-// Make sure to import this for date formatting
 
 class MeetingsScreen extends StatefulWidget {
   @override
@@ -14,13 +12,14 @@ class MeetingsScreen extends StatefulWidget {
 }
 
 class _MeetingsScreenState extends State<MeetingsScreen> {
-   DateTime _focusedDay = DateTime.now();
+  DateTime _focusedDay = DateTime.now();
   List<DateTime> _selectedDays = []; // List to store selected days
 
   // Function to check if a day is selected
   bool _isDaySelected(DateTime day) {
     return _selectedDays.any((selectedDay) => isSameDay(selectedDay, day));
   }
+
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
       _focusedDay = focusedDay;
@@ -36,6 +35,8 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+    final bgColor = themeProvider.isDarkMode ? Color(0xff3E3E6766) : Color(0xffFCFCFC);
+
     return Scaffold(
       backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
       appBar: AppBar(
@@ -81,7 +82,9 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
                       decoration: InputDecoration(
                         hintText: 'Enter a code or link',
                         filled: true,
-                        fillColor:themeProvider.isDarkMode?Color(0xff3E3E6766) : Color(0xffF7F7FC), // Light gray background for the input
+                        fillColor: themeProvider.isDarkMode
+                            ? Color(0xff3E3E6766)
+                            : Color(0xffF7F7FC), // Light gray background for the input
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
                           borderSide: BorderSide.none,
@@ -89,14 +92,12 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
                       ),
                     ),
                   ),
-                  const SizedBox(
-                      width: 8), // Add some space between input and button
+                  const SizedBox(width: 8), // Add some space between input and button
                   TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => AudioCallScreen()),
+                        MaterialPageRoute(builder: (context) => AudioCallScreen()),
                       );
                     },
                     child: const Text(
@@ -119,8 +120,7 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xff095DEC), // Blue button color
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 14), // Button padding
+                  padding: const EdgeInsets.symmetric(vertical: 14), // Button padding
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
@@ -142,14 +142,13 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
               child: TextButton(
                 onPressed: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => ScheduleMeetingPage()));
+                    context,
+                    MaterialPageRoute(builder: (context) => ScheduleMeetingPage()),
+                  );
                 },
                 style: TextButton.styleFrom(
                   backgroundColor: const Color(0xff095DEC).withOpacity(0.2),
-                  padding: const EdgeInsets.symmetric(
-                      vertical: 14), // Button padding
+                  padding: const EdgeInsets.symmetric(vertical: 14), // Button padding
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(25),
                   ),
@@ -167,85 +166,72 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
             ),
             const SizedBox(height: 16),
             Container(
-  decoration: BoxDecoration(
-    color: themeProvider.isDarkMode 
-        ? Color(0xff3E3E6766) 
-        : Color(0xffFCFCFC), // Same background for the whole container
-    border: Border.all(
-      color: themeProvider.isDarkMode 
-          ? Color(0xff3E3E67).withOpacity(0.4) 
-          : Color(0xffDEDEDE), // Border for the container
-      width: 2,
-    ),
-    borderRadius: BorderRadius.circular(8),
-  ),
-  child: TableCalendar(
-    calendarFormat: CalendarFormat.month,
-    focusedDay: _focusedDay,
-    firstDay: DateTime.utc(2020, 1, 1),
-    lastDay: DateTime.utc(2030, 12, 31),
-    selectedDayPredicate: (day) {
-      return _isDaySelected(day); // Check if the day is selected
-    },
-    onDaySelected: _onDaySelected,
-    calendarStyle: CalendarStyle(
-      todayTextStyle: TextStyle(
-        color: themeProvider.isDarkMode ? Colors.white : const Color(0xFF6A6A6A),
-      ),
-      cellMargin: const EdgeInsets.all(6.0),
-      todayDecoration: BoxDecoration(
-        color: themeProvider.isDarkMode 
-            ? Color(0xff3E3E67).withOpacity(0.4) 
-            : Colors.transparent, // Same background as container
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: Colors.blue, // Blue border for today
-          width: 1.0,
-        ),
-      ),
-      selectedDecoration: const BoxDecoration(
-        color: Colors.blue, // Blue color for selected day
-        shape: BoxShape.circle,
-      ),
-      outsideDecoration: BoxDecoration(
-        color: themeProvider.isDarkMode 
-            ? Colors.transparent
-            : Color(0xFFFCFCFC), // Same background as container
-      ),
-      defaultDecoration: BoxDecoration(
-        color: themeProvider.isDarkMode 
-            ? Colors.transparent
-            : Color(0xFFFCFCFC), // Same background as container
-      ),
-      disabledDecoration: BoxDecoration(
-        color: themeProvider.isDarkMode 
-            ? Color(0xff3E3E67)
-            : Color(0xFFFCFCFC), // Same background as container
-      ),
-    ),
-    headerStyle: HeaderStyle(
-      headerMargin: EdgeInsets.only(bottom: 5),
-      titleTextStyle: const TextStyle(color: Colors.blue),
-      formatButtonVisible: false,
-      titleCentered: true,
-      leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.blue),
-      rightChevronIcon: const Icon(Icons.chevron_right, color: Colors.blue),
-    ),
-    daysOfWeekStyle: DaysOfWeekStyle(
-      weekdayStyle: TextStyle(
-        color: themeProvider.isDarkMode 
-            ? Colors.white 
-            : const Color(0xFF6A6A6A),
-      ),
-      weekendStyle: TextStyle(
-        color: themeProvider.isDarkMode 
-            ? Colors.white 
-            : const Color(0xFF6A6A6A),
-      ),
-    ),
-  ),
-),
-
+              decoration: BoxDecoration(
+                color: bgColor, // Same background for the container and calendar
+                border: Border.all(
+                  color: themeProvider.isDarkMode
+                      ? Color(0xff3E3E67).withOpacity(0.4)
+                      : Color(0xffDEDEDE), // Border for the container
+                  width: 2,
+                ),
+                borderRadius: BorderRadius.circular(8),
+              ),
+              child: TableCalendar(
+                calendarFormat: CalendarFormat.month,
+                focusedDay: _focusedDay,
+                firstDay: DateTime.utc(2020, 1, 1),
+                lastDay: DateTime.utc(2030, 12, 31),
+                selectedDayPredicate: (day) {
+                  return _isDaySelected(day); // Check if the day is selected
+                },
+                onDaySelected: _onDaySelected,
+                calendarStyle: CalendarStyle(
+                  todayTextStyle: TextStyle(
+                    color: themeProvider.isDarkMode ? Colors.white : const Color(0xFF6A6A6A),
+                  ),
+                  cellMargin: const EdgeInsets.all(6.0),
+                  todayDecoration: BoxDecoration(
+                    color: themeProvider.isDarkMode
+                        ? Color(0xff3E3E67).withOpacity(0.4)
+                        : Colors.transparent, // Same background as container
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.blue, // Blue border for today
+                      width: 1.0,
+                    ),
+                  ),
+                  selectedDecoration: const BoxDecoration(
+                    color: Colors.blue, // Blue color for selected day
+                    shape: BoxShape.circle,
+                  ),
+                  outsideDecoration: BoxDecoration(
+                    color: bgColor, // Same background as container
+                  ),
+                  defaultDecoration: BoxDecoration(
+                    color: bgColor, // Same background as container
+                  ),
+                  disabledDecoration: BoxDecoration(
+                    color: bgColor, // Same background as container
+                  ),
+                ),
+                headerStyle: HeaderStyle(
+                  headerMargin: EdgeInsets.only(bottom: 5),
+                  titleTextStyle: const TextStyle(color: Colors.blue),
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.blue),
+                  rightChevronIcon: const Icon(Icons.chevron_right, color: Colors.blue),
+                ),
+                daysOfWeekStyle: DaysOfWeekStyle(
+                  weekdayStyle: TextStyle(
+                    color: themeProvider.isDarkMode ? Colors.white : const Color(0xFF6A6A6A),
+                  ),
+                  weekendStyle: TextStyle(
+                    color: themeProvider.isDarkMode ? Colors.white : const Color(0xFF6A6A6A),
+                  ),
+                ),
+              ),
+            ),
             const SizedBox(height: 16),
           ],
         ),

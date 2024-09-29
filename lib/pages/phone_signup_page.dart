@@ -56,16 +56,21 @@ class _PhoneSignupPageState extends State<PhoneSignupPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
-        centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {
-            context.go('connection_page');
-          },
-          child: Icon(
-            Icons.arrow_back_ios_new,
+        toolbarHeight: 56,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        leadingWidth: 40,
+        titleSpacing: 0,
+        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 18,
             color: Colors.black,
-            size: 24,
           ),
+          onPressed: () {
+            context.pushNamed('connection_page');
+          },
         ),
       ),
       body: Column(
@@ -110,6 +115,8 @@ class _PhoneSignupPageState extends State<PhoneSignupPage> {
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                 ),
+                filled: true,
+                fillColor: Colors.grey[300],
               ),
             ),
           ),
@@ -125,7 +132,8 @@ class _PhoneSignupPageState extends State<PhoneSignupPage> {
                   color: Color(0xffADB5BD),
                   fontSize: 14,
                 ),
-                fillColor: Color(0xFFF7F7FC),
+                filled: true,
+                fillColor: Colors.grey[300],
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                 ),
@@ -153,7 +161,8 @@ class _PhoneSignupPageState extends State<PhoneSignupPage> {
                   color: Color(0xffADB5BD),
                   fontSize: 14,
                 ),
-                fillColor: Color(0xFFF7F7FC),
+                filled: true,
+                fillColor: Colors.grey[300],
                 border: OutlineInputBorder(
                   borderSide: BorderSide.none,
                 ),
