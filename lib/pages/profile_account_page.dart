@@ -1,3 +1,4 @@
+import 'package:calliverse/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -29,7 +30,7 @@ class _ProfileAccountPageState extends State<ProfileAccountPage> {
     }
 
     // If validation passes, navigate to the next screen
-    context.goNamed('loginPage'); // Replace 'nextScreen' with your route
+    context.pushNamed('login_page'); // Replace 'nextScreen' with your route
   }
 
   void _showErrorDialog(String message) {
@@ -54,23 +55,62 @@ class _ProfileAccountPageState extends State<ProfileAccountPage> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         elevation: 0,
-        title: Text("Your Profile"),
-        leading: GestureDetector(
-          onTap: () {
-            context.goNamed('otpVerificationPage');
-          },
-          child: Icon(
-            Icons.arrow_back_ios_new,
+        toolbarHeight: 56,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        leadingWidth: 40,
+        titleSpacing: 0,
+        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 18,
             color: Colors.black,
-            size: 24,
           ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => LoginPage(),
+              ),
+            );
+          },
+        ),
+        title: Text(
+          "Your Profile",
+          style: TextStyle(fontWeight: FontWeight.w500, fontSize: 20),
         ),
       ),
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 120, vertical: 30),
-            child: Image.asset("assets/images/profile.png"),
+            padding: const EdgeInsets.symmetric(horizontal: 120),
+            child: Stack(
+              children: [
+                CircleAvatar(
+                  backgroundColor: Colors.grey[300],
+                  radius: 90,
+                  child: ImageIcon(
+                    AssetImage('assets/images/person_outlined.png'),
+                    size: 56.0,
+                    color: Colors.black,
+                  ),
+                ),
+                Positioned(
+                  bottom: 32,
+                  right: 10,
+                  child: CircleAvatar(
+                    backgroundColor: Colors.black,
+                    radius: 11,
+                    child: Icon(
+                      Icons.add,
+                      color: Colors.white,
+                      size: 18,
+                    ),
+                  ),
+                )
+              ],
+            ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -88,13 +128,13 @@ class _ProfileAccountPageState extends State<ProfileAccountPage> {
                       fontSize: 14,
                     ),
                     filled: true,
-                    fillColor: Color(0xFFF7F7FC),
+                    fillColor: Colors.grey[300],
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 // Last Name Field
                 TextField(
                   controller: _lastNameController,
@@ -107,13 +147,13 @@ class _ProfileAccountPageState extends State<ProfileAccountPage> {
                       fontSize: 14,
                     ),
                     filled: true,
-                    fillColor: Color(0xFFF7F7FC),
+                    fillColor: Colors.grey[300],
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 // Bio Field (Optional)
                 TextField(
                   controller: _bioController,
@@ -126,13 +166,13 @@ class _ProfileAccountPageState extends State<ProfileAccountPage> {
                       fontSize: 14,
                     ),
                     filled: true,
-                    fillColor: Color(0xFFF7F7FC),
+                    fillColor: Colors.grey[300],
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                     ),
                   ),
                 ),
-                SizedBox(height: 15),
+                SizedBox(height: 10),
                 // Website Link Field (Optional)
                 TextField(
                   controller: _websiteController,
@@ -145,7 +185,7 @@ class _ProfileAccountPageState extends State<ProfileAccountPage> {
                       fontSize: 14,
                     ),
                     filled: true,
-                    fillColor: Color(0xFFF7F7FC),
+                    fillColor: Colors.grey[300],
                     border: OutlineInputBorder(
                       borderSide: BorderSide.none,
                     ),

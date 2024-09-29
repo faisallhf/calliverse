@@ -161,7 +161,8 @@ class MessagePage extends StatelessWidget {
                         builder: (context) => DetailPage(
                           chatDetails: {
                             "name": chats[index]["name"], // User's name
-                            "imagePath": chats[index]["image"], // User's image path
+                            "imagePath": chats[index]
+                                ["image"], // User's image path
                           },
                         ),
                       ),

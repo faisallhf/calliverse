@@ -1,3 +1,4 @@
+import 'package:calliverse/pages/call.dart';
 import 'package:calliverse/pages/connection_page.dart';
 import 'package:calliverse/pages/email_signup_page.dart';
 import 'package:calliverse/pages/login_page.dart';
@@ -5,8 +6,31 @@ import 'package:calliverse/pages/otp_verification_page.dart';
 import 'package:calliverse/pages/phone_signup_page.dart';
 import 'package:calliverse/pages/profile_account_page.dart';
 import 'package:calliverse/pages/subscription_page.dart';
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:calliverse/pages/splash_page.dart';
+
+// TRANSITION FUNCTION
+CustomTransitionPage buildPageWithDefaultTransition<T>({
+  required BuildContext context,
+  required GoRouterState state,
+  required Widget child,
+}) {
+  return CustomTransitionPage<T>(
+    key: state.pageKey,
+    child: child,
+    // transitionDuration: Duration(milliseconds: 500),
+    transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+        SlideTransition(
+            position: animation.drive(
+              Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).chain(CurveTween(curve: Curves.easeIn)),
+            ),
+            child: child),
+  );
+}
 
 class CalliverseRouter {
   static final GoRouter _router = GoRouter(
@@ -20,17 +44,8 @@ class CalliverseRouter {
       GoRoute(
         name: 'connection_page',
         path: '/connection_page',
-        builder: (context, state) => const ConnectionPage(),
-      ),
-      GoRoute(
-        name: 'emailsignupPage',
-        path: '/emailsignup_page',
-        builder: (context, state) => const EmailSignupPage(),
-      ),
-      GoRoute(
-        name: 'phonesignupPage',
-        path: '/phonesignup_page',
-        builder: (context, state) => const PhoneSignupPage(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const ConnectionPage()),
       ),
       GoRoute(
         name: 'otpVerificationPage',
@@ -45,17 +60,38 @@ class CalliverseRouter {
       GoRoute(
         name: 'profileAccountPage',
         path: '/profile_account_page',
-        builder: (context, state) => const ProfileAccountPage(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const ProfileAccountPage()),
       ),
       GoRoute(
-        name: 'loginPage',
-        path: '/loginPage',
-        builder: (context, state) => const LoginPage(),
+        name: 'login_page',
+        path: '/login_page',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const LoginPage()),
+      ),
+      GoRoute(
+        name: 'emailsignupPage',
+        path: '/emailsignup_page',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const EmailSignupPage()),
+      ),
+      GoRoute(
+        name: 'phonesignupPage',
+        path: '/phonesignup_page',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const PhoneSignupPage()),
       ),
       GoRoute(
         name: 'subscriptionPage',
         path: '/subscriptionPage',
-        builder: (context, state) => const SubscriptionPage(),
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const SubscriptionPage()),
+      ),
+      GoRoute(
+        name: 'call_page',
+        path: '/call_page',
+        pageBuilder: (context, state) => buildPageWithDefaultTransition(
+            context: context, state: state, child: const Call()),
       ),
     ],
   );

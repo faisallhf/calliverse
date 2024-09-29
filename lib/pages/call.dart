@@ -151,7 +151,6 @@ class _CallState extends State<Call> {
       "callTime": "1 hour ago",
       "isMissedCall": true,
     },
-    
   ];
 
   void _onItemTapped(int index) {

@@ -16,7 +16,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFFFFFFF),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -65,7 +65,7 @@ class _ConnectionPageState extends State<ConnectionPage> {
                 backgroundColor: Color(0xFF020520),
                 minimumSize: Size(double.infinity, 50),
               ),
-              child: Text(
+              child: const Text(
                 "Continue with phone",
                 style: TextStyle(
                   fontSize: 16,
@@ -76,9 +76,9 @@ class _ConnectionPageState extends State<ConnectionPage> {
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                context.goNamed('loginPage');
+                context.pushNamed('login_page');
               },
-              child: Text(
+              child: const Text(
                 "Login",
                 style: TextStyle(
                   color: Colors.blue,

@@ -39,7 +39,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
     // Simple validation for demo purposes (you can replace it with your backend OTP validation)
     if (enteredOtp.length == 4) {
       // Assuming OTP is valid, navigate to the next page (e.g., profile account page)
-      context.goNamed('profileAccountPage');
+      context.pushNamed('profileAccountPage');
     } else {
       // Show an error message if OTP is invalid
       // ScaffoldMessenger.of(context).showSnackBar(
@@ -55,16 +55,21 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
       backgroundColor: Color(0xFFFFFFFF),
       appBar: AppBar(
         elevation: 0,
-        centerTitle: true,
-        leading: GestureDetector(
-          onTap: () {
-            context.goNamed('emailsignupPage');
-          },
-          child: Icon(
-            Icons.arrow_back_ios_new,
+        toolbarHeight: 56,
+        automaticallyImplyLeading: false,
+        backgroundColor: Colors.transparent,
+        leadingWidth: 40,
+        titleSpacing: 0,
+        centerTitle: false,
+        leading: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios_new_outlined,
+            size: 18,
             color: Colors.black,
-            size: 24,
           ),
+          onPressed: () {
+            context.pushNamed('emailsignupPage');
+          },
         ),
       ),
       body: Column(
@@ -99,7 +104,7 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
                     border: Border.all(color: Colors.transparent),
                   ) ??
                   BoxDecoration(
-                    color: Color(0xFFEDEDED),
+                    color: Colors.white,
                     borderRadius: BorderRadius.circular(50),
                     border: Border.all(color: Colors.transparent),
                   ),
