@@ -1,8 +1,10 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:calliverse/pages/schedule_meeting_details.dart';
 import 'package:calliverse/pages/audio_call_screen.dart';
 import 'package:calliverse/pages/call.dart';
 // import 'package:calliverse/pages/message_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 // Make sure to import this for date formatting
 
@@ -33,21 +35,22 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 56,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
         leadingWidth: 40,
         titleSpacing: 0,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_outlined,
             size: 18,
-            color: Colors.black,
+            color: themeProvider.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             Navigator.push(
@@ -56,10 +59,10 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
             );
           },
         ),
-        title: const Text(
+        title: Text(
           'Meetings',
           style: TextStyle(
-            color: Color(0xff0f1828),
+            color: themeProvider.isDarkMode ? Colors.white : Color(0xff0f1828),
             fontFamily: 'Poppins',
             fontSize: 18,
           ),
@@ -78,8 +81,7 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
                       decoration: InputDecoration(
                         hintText: 'Enter a code or link',
                         filled: true,
-                        fillColor: const Color(
-                            0xffF7F7FC), // Light gray background for the input
+                        fillColor:themeProvider.isDarkMode?Color(0xff3E3E6766) : Color(0xffF7F7FC), // Light gray background for the input
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5.0),
                           borderSide: BorderSide.none,
@@ -165,65 +167,85 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
             ),
             const SizedBox(height: 16),
             Container(
-              decoration: BoxDecoration(
-                color: Color(0xffFCFCFC),
-                border: Border.all(
-                  color: const Color(0xffDEDEDE), // Border for the container
-                  width: 2,
-                ),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child:TableCalendar(
-          calendarFormat: CalendarFormat.month,
-          focusedDay: _focusedDay,
-          firstDay: DateTime.utc(2020, 1, 1),
-          lastDay: DateTime.utc(2030, 12, 31),
-          selectedDayPredicate: (day) {
-            return _isDaySelected(day); // Check if the day is selected
-          },
-          onDaySelected: _onDaySelected, // Toggle the selection of days
-          calendarStyle: CalendarStyle(
-            todayTextStyle: TextStyle(color: Colors.black),
-            cellMargin: EdgeInsets.all(6.0),
-            
-            todayDecoration: BoxDecoration(
-    color: Colors.transparent, // No fill color
-    shape: BoxShape.circle,
+  decoration: BoxDecoration(
+    color: themeProvider.isDarkMode 
+        ? Color(0xff3E3E6766) 
+        : Color(0xffFCFCFC), // Same background for the whole container
     border: Border.all(
-      color: Colors.blue, // Blue border color
-      width: 1.0, // Border width
-    ),),
-            selectedDecoration: BoxDecoration(
-              color: Colors.blue,
-              shape: BoxShape.circle,
-            ),
-            outsideDecoration: BoxDecoration(
-              color: Color(0xFFFCFCFC), // Set outside day cells to the same background color
-            ),
-            defaultDecoration: BoxDecoration(
-              color: Color(0xFFFCFCFC), // Set default cells to match the background
-            ),
-            disabledDecoration: BoxDecoration(
-              color: Color(0xFFFCFCFC), // Disabled days should also match the background
-            ),
-          ),
-          headerStyle: HeaderStyle(
-            titleTextStyle: TextStyle(color: Colors.blue),
-            formatButtonVisible: false,
-            titleCentered: true,
-            leftChevronIcon: Icon(Icons.chevron_left, color: Colors.blue),
-            rightChevronIcon: Icon(Icons.chevron_right, color: Colors.blue),
-            decoration: BoxDecoration(
-              color: Color(0xFFFCFCFC), // Header background color
-            ),
-          ),
-          daysOfWeekStyle: DaysOfWeekStyle(
-            decoration: BoxDecoration(
-              color: Color(0xFFFCFCFC), // Days of the week background color
-            ),
-          ),
+      color: themeProvider.isDarkMode 
+          ? Color(0xff3E3E67).withOpacity(0.4) 
+          : Color(0xffDEDEDE), // Border for the container
+      width: 2,
+    ),
+    borderRadius: BorderRadius.circular(8),
+  ),
+  child: TableCalendar(
+    calendarFormat: CalendarFormat.month,
+    focusedDay: _focusedDay,
+    firstDay: DateTime.utc(2020, 1, 1),
+    lastDay: DateTime.utc(2030, 12, 31),
+    selectedDayPredicate: (day) {
+      return _isDaySelected(day); // Check if the day is selected
+    },
+    onDaySelected: _onDaySelected,
+    calendarStyle: CalendarStyle(
+      todayTextStyle: TextStyle(
+        color: themeProvider.isDarkMode ? Colors.white : const Color(0xFF6A6A6A),
+      ),
+      cellMargin: const EdgeInsets.all(6.0),
+      todayDecoration: BoxDecoration(
+        color: themeProvider.isDarkMode 
+            ? Color(0xff3E3E67).withOpacity(0.4) 
+            : Colors.transparent, // Same background as container
+        shape: BoxShape.circle,
+        border: Border.all(
+          color: Colors.blue, // Blue border for today
+          width: 1.0,
         ),
-            ),
+      ),
+      selectedDecoration: const BoxDecoration(
+        color: Colors.blue, // Blue color for selected day
+        shape: BoxShape.circle,
+      ),
+      outsideDecoration: BoxDecoration(
+        color: themeProvider.isDarkMode 
+            ? Colors.transparent
+            : Color(0xFFFCFCFC), // Same background as container
+      ),
+      defaultDecoration: BoxDecoration(
+        color: themeProvider.isDarkMode 
+            ? Colors.transparent
+            : Color(0xFFFCFCFC), // Same background as container
+      ),
+      disabledDecoration: BoxDecoration(
+        color: themeProvider.isDarkMode 
+            ? Color(0xff3E3E67)
+            : Color(0xFFFCFCFC), // Same background as container
+      ),
+    ),
+    headerStyle: HeaderStyle(
+      headerMargin: EdgeInsets.only(bottom: 5),
+      titleTextStyle: const TextStyle(color: Colors.blue),
+      formatButtonVisible: false,
+      titleCentered: true,
+      leftChevronIcon: const Icon(Icons.chevron_left, color: Colors.blue),
+      rightChevronIcon: const Icon(Icons.chevron_right, color: Colors.blue),
+    ),
+    daysOfWeekStyle: DaysOfWeekStyle(
+      weekdayStyle: TextStyle(
+        color: themeProvider.isDarkMode 
+            ? Colors.white 
+            : const Color(0xFF6A6A6A),
+      ),
+      weekendStyle: TextStyle(
+        color: themeProvider.isDarkMode 
+            ? Colors.white 
+            : const Color(0xFF6A6A6A),
+      ),
+    ),
+  ),
+),
+
             const SizedBox(height: 16),
           ],
         ),

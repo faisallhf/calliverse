@@ -42,7 +42,7 @@ class AddContact extends StatelessWidget {
             // First Name Field
             TextField(
               decoration: InputDecoration(
-                labelText: 'First Name (Required)',
+                hintText: 'First Name (Required)',
                 filled: true,
                 fillColor: Colors.grey.shade300,
                 border: OutlineInputBorder(
@@ -56,7 +56,7 @@ class AddContact extends StatelessWidget {
             // Last Name Field
             TextField(
               decoration: InputDecoration(
-                labelText: 'Last Name (Optional)',
+                hintText: 'Last Name (Optional)',
                 filled: true,
                 fillColor: Colors.grey[300],
                 border: OutlineInputBorder(
@@ -69,20 +69,21 @@ class AddContact extends StatelessWidget {
 
             // Phone Number Field with IntlPhoneField
             IntlPhoneField(
-              decoration: InputDecoration(
-                labelText: 'Phone Number',
-                filled: true,
-                fillColor: Colors.grey[300],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              initialCountryCode: 'US', // Default set to USA
-              onChanged: (phone) {
-                print(phone.completeNumber); // You can use this number
-              },
-            ),
+  decoration: InputDecoration(
+    hintText: 'Phone Number', // Replaces labelText with hintText
+    filled: true,
+    fillColor: Colors.grey[300],
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5.0),
+      borderSide: BorderSide.none,
+    ),
+  ),
+  initialCountryCode: 'US', // Default set to USA
+  onChanged: (phone) {
+    print(phone.completeNumber); // You can use this number
+  },
+),
+
 
             SizedBox(height: 30),
 

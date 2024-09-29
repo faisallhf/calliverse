@@ -1,6 +1,8 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:calliverse/pages/detail_page.dart';
 import 'package:calliverse/pages/new_message_page.dart';
+import 'package:provider/provider.dart';
 
 class MessagePage extends StatelessWidget {
   final List<Map<String, dynamic>> chats = [
@@ -59,7 +61,9 @@ class MessagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
+      backgroundColor:themeProvider.isDarkMode ? Color(0xff020520) : Colors.white ,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(160.0), // Adjust the height as needed
         child: AppBar(

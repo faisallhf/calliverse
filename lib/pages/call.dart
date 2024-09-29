@@ -1,3 +1,4 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:calliverse/pages/ai_screen.dart';
 import 'package:calliverse/pages/audio_call_screen.dart';
 
@@ -7,6 +8,7 @@ import 'package:calliverse/pages/message_page.dart';
 import 'package:calliverse/pages/profile_screen.dart';
 import 'package:calliverse/pages/video_call_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CalllistItemWidget extends StatelessWidget {
   final String name;
@@ -283,12 +285,14 @@ class _CallState extends State<Call> {
 
   @override
   Widget build(BuildContext context) {
+     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: _buildScreen(_selectedIndex),
       bottomNavigationBar:
           _selectedIndex != 2 // Show bottom nav only if not on ChatbotScreen
               ? BottomNavigationBar(
+                backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
                   type: BottomNavigationBarType.fixed,
                   currentIndex: _selectedIndex,
                   onTap: _onItemTapped,
