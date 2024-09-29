@@ -51,19 +51,22 @@ class _EmailSignupPageState extends State<EmailSignupPage> {
     return null;
   }
 
-  void _onSubmit() {
-    setState(() {
-      _emailError = _validateEmail(_emailController.text);
-      _passwordError = _validatePassword(_passwordController.text);
-      _confirmPasswordError =
-          _validateConfirmPassword(_confirmpasswordController.text);
-    });
+  // void _onSubmit() {
+  //   setState(() {
+  //     _emailError = _validateEmail(_emailController.text);
+  //     _passwordError = _validatePassword(_passwordController.text);
+  //     _confirmPasswordError =
+  //         _validateConfirmPassword(_confirmpasswordController.text);
+  //   });
 
-    if (_emailError == null &&
-        _passwordError == null &&
-        _confirmPasswordError == null) {
-      context.push('/otpverification_page/Email/${_emailController.text}');
-    }
+  //   if (_emailError == null &&
+  //       _passwordError == null &&
+  //       _confirmPasswordError == null) {
+  //     context.push('/otpverification_page/Email/${_emailController.text}');
+  //   }
+  // }
+  void _onSubmit() {
+    context.push('/otpverification_page/Email/${_emailController.text}');
   }
 
   @override
@@ -120,7 +123,7 @@ class _EmailSignupPageState extends State<EmailSignupPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextField(
-                        controller: _emailController,
+                        // controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
                         decoration: InputDecoration(
                           labelText: "Email",
@@ -157,7 +160,7 @@ class _EmailSignupPageState extends State<EmailSignupPage> {
                         controller: _passwordController,
                         obscureText: true,
                         decoration: InputDecoration(
-                          labelText: 'Password',
+                          // labelText: 'Password',
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           labelStyle: TextStyle(
                             color: Color(0xffADB5BD),
@@ -187,7 +190,7 @@ class _EmailSignupPageState extends State<EmailSignupPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       TextField(
-                        controller: _confirmpasswordController,
+                        // controller: _confirmpasswordController,
                         obscureText: true,
                         decoration: InputDecoration(
                           labelText: 'Confirm Password',

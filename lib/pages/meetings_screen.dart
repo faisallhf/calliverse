@@ -1,7 +1,6 @@
 import 'package:calliverse/pages/schedule_meeting_details.dart';
 import 'package:calliverse/pages/audio_call_screen.dart';
 import 'package:calliverse/pages/call.dart';
-// import 'package:calliverse/pages/message_page.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 // Make sure to import this for date formatting
@@ -12,19 +11,21 @@ class MeetingsScreen extends StatefulWidget {
 }
 
 class _MeetingsScreenState extends State<MeetingsScreen> {
-   DateTime _focusedDay = DateTime.now();
+  DateTime _focusedDay = DateTime.now();
   List<DateTime> _selectedDays = []; // List to store selected days
 
   // Function to check if a day is selected
   bool _isDaySelected(DateTime day) {
     return _selectedDays.any((selectedDay) => isSameDay(selectedDay, day));
   }
+
   void _onDaySelected(DateTime selectedDay, DateTime focusedDay) {
     setState(() {
       _focusedDay = focusedDay;
 
       if (_isDaySelected(selectedDay)) {
-        _selectedDays.removeWhere((day) => isSameDay(day, selectedDay)); // Unselect day
+        _selectedDays
+            .removeWhere((day) => isSameDay(day, selectedDay)); // Unselect day
       } else {
         _selectedDays.add(selectedDay); // Select day
       }
@@ -173,56 +174,61 @@ class _MeetingsScreenState extends State<MeetingsScreen> {
                 ),
                 borderRadius: BorderRadius.circular(8),
               ),
-              child:TableCalendar(
-          calendarFormat: CalendarFormat.month,
-          focusedDay: _focusedDay,
-          firstDay: DateTime.utc(2020, 1, 1),
-          lastDay: DateTime.utc(2030, 12, 31),
-          selectedDayPredicate: (day) {
-            return _isDaySelected(day); // Check if the day is selected
-          },
-          onDaySelected: _onDaySelected, // Toggle the selection of days
-          calendarStyle: CalendarStyle(
-            todayTextStyle: TextStyle(color: Colors.black),
-            cellMargin: EdgeInsets.all(6.0),
-            
-            todayDecoration: BoxDecoration(
-    color: Colors.transparent, // No fill color
-    shape: BoxShape.circle,
-    border: Border.all(
-      color: Colors.blue, // Blue border color
-      width: 1.0, // Border width
-    ),),
-            selectedDecoration: BoxDecoration(
-              color: Colors.blue,
-              shape: BoxShape.circle,
-            ),
-            outsideDecoration: BoxDecoration(
-              color: Color(0xFFFCFCFC), // Set outside day cells to the same background color
-            ),
-            defaultDecoration: BoxDecoration(
-              color: Color(0xFFFCFCFC), // Set default cells to match the background
-            ),
-            disabledDecoration: BoxDecoration(
-              color: Color(0xFFFCFCFC), // Disabled days should also match the background
-            ),
-          ),
-          headerStyle: HeaderStyle(
-            titleTextStyle: TextStyle(color: Colors.blue),
-            formatButtonVisible: false,
-            titleCentered: true,
-            leftChevronIcon: Icon(Icons.chevron_left, color: Colors.blue),
-            rightChevronIcon: Icon(Icons.chevron_right, color: Colors.blue),
-            decoration: BoxDecoration(
-              color: Color(0xFFFCFCFC), // Header background color
-            ),
-          ),
-          daysOfWeekStyle: DaysOfWeekStyle(
-            decoration: BoxDecoration(
-              color: Color(0xFFFCFCFC), // Days of the week background color
-            ),
-          ),
-        ),
+              child: TableCalendar(
+                calendarFormat: CalendarFormat.month,
+                focusedDay: _focusedDay,
+                firstDay: DateTime.utc(2020, 1, 1),
+                lastDay: DateTime.utc(2030, 12, 31),
+                selectedDayPredicate: (day) {
+                  return _isDaySelected(day); // Check if the day is selected
+                },
+                onDaySelected: _onDaySelected, // Toggle the selection of days
+                calendarStyle: CalendarStyle(
+                  todayTextStyle: TextStyle(color: Colors.black),
+                  cellMargin: EdgeInsets.all(6.0),
+                  todayDecoration: BoxDecoration(
+                    color: Colors.transparent, // No fill color
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.blue, // Blue border color
+                      width: 1.0, // Border width
+                    ),
+                  ),
+                  selectedDecoration: BoxDecoration(
+                    color: Colors.blue,
+                    shape: BoxShape.circle,
+                  ),
+                  outsideDecoration: BoxDecoration(
+                    color: Color(
+                        0xFFFCFCFC), // Set outside day cells to the same background color
+                  ),
+                  defaultDecoration: BoxDecoration(
+                    color: Color(
+                        0xFFFCFCFC), // Set default cells to match the background
+                  ),
+                  disabledDecoration: BoxDecoration(
+                    color: Color(
+                        0xFFFCFCFC), // Disabled days should also match the background
+                  ),
+                ),
+                headerStyle: HeaderStyle(
+                  titleTextStyle: TextStyle(color: Colors.blue),
+                  formatButtonVisible: false,
+                  titleCentered: true,
+                  leftChevronIcon: Icon(Icons.chevron_left, color: Colors.blue),
+                  rightChevronIcon:
+                      Icon(Icons.chevron_right, color: Colors.blue),
+                  decoration: BoxDecoration(
+                    color: Color(0xFFFCFCFC), // Header background color
+                  ),
+                ),
+                daysOfWeekStyle: DaysOfWeekStyle(
+                  decoration: BoxDecoration(
+                    color:
+                        Color(0xFFFCFCFC), // Days of the week background color
+                  ),
+                ),
+              ),
             ),
             const SizedBox(height: 16),
           ],

@@ -35,15 +35,19 @@ class _LoginPageState extends State<LoginPage> {
     return null;
   }
 
-  void _onSubmit() {
-    setState(() {
-      _emailError = _validateEmail(_emailController.text.trim());
-      _passwordError = _validatePassword(_passwordController.text.trim());
-    });
+  // void _onSubmit() {
+  //   setState(() {
+  //     _emailError = _validateEmail(_emailController.text.trim());
+  //     _passwordError = _validatePassword(_passwordController.text.trim());
+  //   });
 
-    if (_emailError == null && _passwordError == null) {
-      context.pushNamed('subscriptionPage');
-    }
+  //   if (_emailError == null && _passwordError == null) {
+  //     context.pushNamed('subscriptionPage');
+  //   }
+  // }
+
+  void _onSubmit() {
+    context.pushNamed('subscriptionPage');
   }
 
   @override
@@ -91,7 +95,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 TextField(
-                  controller: _emailController,
+                  // controller: _emailController,
                   keyboardType: TextInputType.emailAddress,
                   decoration: InputDecoration(
                     labelText: "Enter your email or phone",
@@ -112,7 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 SizedBox(height: 10),
                 TextField(
-                  controller: _passwordController,
+                  // controller: _passwordController,
                   obscureText: true,
                   decoration: InputDecoration(
                     labelText: 'Password',
