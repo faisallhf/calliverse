@@ -1,6 +1,8 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:calliverse/pages/detail_page.dart';
 import 'package:calliverse/pages/new_message_page.dart';
+import 'package:provider/provider.dart';
 
 class MessagePage extends StatelessWidget {
   final List<Map<String, dynamic>> chats = [
@@ -59,13 +61,15 @@ class MessagePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
+      backgroundColor:themeProvider.isDarkMode ? Color(0xff020520) : Colors.white ,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(160.0), // Adjust the height as needed
         child: AppBar(
           automaticallyImplyLeading: false,
           centerTitle: false,
-          backgroundColor: Colors.transparent,
+           backgroundColor:themeProvider.isDarkMode ? Colors.transparent : Colors.transparent ,
           elevation: 0,
           title: Padding(
             padding: const EdgeInsets.only(top: 25.0),
@@ -80,7 +84,9 @@ class MessagePage extends StatelessWidget {
             ),
           ),
           flexibleSpace: Container(
+            
             decoration: BoxDecoration(
+              
               color: Color(0xff095DEC),
               borderRadius: BorderRadius.only(
                 bottomLeft: Radius.circular(20),
@@ -111,68 +117,78 @@ class MessagePage extends StatelessWidget {
           ),
         ),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: ListView.builder(
-              itemCount: chats.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  leading: CircleAvatar(
-                    backgroundImage: AssetImage(chats[index]["image"]),
-                    radius: 25,
-                  ),
-                  title: Text(
-                    chats[index]["name"],
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
+      body: Padding(
+        padding: const EdgeInsets.only(top:  28.0),
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView.builder(
+                itemCount: chats.length,
+                itemBuilder: (context, index) {
+                  return ListTile(
+                    leading: CircleAvatar(
+                      backgroundImage: AssetImage(chats[index]["image"]),
+                      radius: 25,
                     ),
-                  ),
-                  subtitle: Text(chats[index]["message"]),
-                  trailing: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        chats[index]["time"],
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
+                    title: Text(
+                      chats[index]["name"],
+                      style: TextStyle(
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        fontFamily: 'Inter',
+                        color: themeProvider.isDarkMode?Color(0xffFFFFFF):Color(0xff000000)
                       ),
-                      SizedBox(height: 5),
-                      chats[index]["read"]
-                          ? Icon(
-                              Icons.done_all,
-                              size: 16,
-                              color: Colors.blue,
-                            )
-                          : Icon(
-                              Icons.done,
-                              size: 16,
-                              color: Colors.grey,
-                            ),
-                    ],
-                  ),
-                  onTap: () {
-                    // Navigate to DetailPage with specific user details
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DetailPage(
-                          chatDetails: {
-                            "name": chats[index]["name"], // User's name
-                            "imagePath": chats[index]
-                                ["image"], // User's image path
-                          },
+                    ),
+                    subtitle: Text(chats[index]["message"],style: TextStyle(fontFamily: 'Inter',fontSize: 14,fontWeight: FontWeight.w500,
+                    color: themeProvider.isDarkMode?Color(0xffFFFFFF):Color(0xff8A91A8)),),
+                    trailing: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          chats[index]["time"],
+                          style: TextStyle(
+                            fontFamily: 'Inter',
+                            fontWeight: FontWeight.w500,
+                             color: themeProvider.isDarkMode?Color(0xffFFFFFF):Color(0xff8A91A8),
+                            fontSize: 12,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                );
-              },
+                        SizedBox(height: 5),
+                        chats[index]["read"]
+                            ? Icon(
+                                Icons.done_all,
+                                size: 16,
+                                color: Colors.blue,
+                              )
+                            : Icon(
+                                Icons.done,
+                                size: 16,
+                                color: Colors.grey,
+                              ),
+                      ],
+                    ),
+                    onTap: () {
+                      // Navigate to DetailPage with specific user details
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => DetailPage(
+                            chatDetails: {
+                              "name": chats[index]["name"], // User's name
+                              "imagePath": chats[index]
+                                  ["image"], // User's image path
+                            },
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
       floatingActionButton: FloatingActionButton(
         shape: CircleBorder(),

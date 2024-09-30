@@ -1,5 +1,7 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:provider/provider.dart';
 
 class EditProfileScreen extends StatefulWidget {
   @override
@@ -9,38 +11,39 @@ class EditProfileScreen extends StatefulWidget {
 class _EditProfileScreenState extends State<EditProfileScreen> {
   final TextEditingController nameController = TextEditingController();
   final TextEditingController countryController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
   final TextEditingController bioController = TextEditingController();
   final TextEditingController websiteController = TextEditingController();
-  String selectedCountryCode = '+1'; // Default country code
 
   @override
   Widget build(BuildContext context) {
+    // Accessing the ThemeProvider here
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 56,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
         leadingWidth: 40,
         titleSpacing: 0,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_outlined,
             size: 18,
-            color: Colors.black,
+            color: themeProvider.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
-          ' Edit Profile',
+        title: Text(
+          'Edit Profile',
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            color: Color(0xff0f1828),
+            color: themeProvider.isDarkMode ? Colors.white : Color(0xff0f1828),
             fontFamily: 'Poppins',
             fontSize: 18,
           ),
@@ -55,8 +58,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
               children: [
                 const CircleAvatar(
                   radius: 50,
-                  backgroundImage: AssetImage(
-                      'assets/images/image4.png'), // Placeholder image
+                  backgroundImage: AssetImage('assets/images/image4.png'), // Placeholder image
                 ),
                 Positioned(
                   bottom: 0,
@@ -66,8 +68,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                     backgroundColor: Colors.blue,
                     child: IconButton(
                       padding: EdgeInsets.zero,
-                      icon: const Icon(Icons.camera_alt,
-                          size: 18, color: Colors.white),
+                      icon: const Icon(Icons.camera_alt, size: 18, color: Colors.white),
                       onPressed: () {
                         // Handle camera action
                       },
@@ -78,13 +79,12 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
             ),
             const SizedBox(height: 20),
             // Text Fields for Profile Details
-            _buildTextField('Name', nameController),
-            _buildTextField('Country', countryController),
-            _buildPhoneNumberField(),
-            _buildTextField('Bio', bioController, maxLines: 3),
-            _buildTextField('Website Link', websiteController,
-                keyboardType: TextInputType.url),
-            const SizedBox(height: 30),
+            _buildTextField('Name', nameController, themeProvider),
+            _buildTextField('Country', countryController, themeProvider),
+            _buildPhoneNumberField(themeProvider), // Updated phone field
+            _buildTextField('Bio', bioController, themeProvider, maxLines: 3),
+            _buildTextField('Website Link', websiteController, themeProvider, keyboardType: TextInputType.url),
+            const SizedBox(height: 50),
             // Save Button
             Center(
               child: SizedBox(
@@ -92,6 +92,7 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
                 height: 50, // Adjust height
                 child: ElevatedButton(
                   onPressed: () {
+                    // Handle save action (e.g., save user data)
                     Navigator.pop(context);
                   },
                   style: ElevatedButton.styleFrom(
@@ -119,27 +120,25 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   // Helper method to build a text field with no borders and grey color
-  Widget _buildTextField(String labelText, TextEditingController controller,
+  Widget _buildTextField(String labelText, TextEditingController controller, ThemeProvider themeProvider, 
       {TextInputType keyboardType = TextInputType.text, int maxLines = 1}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: Container(
         height: 45, // Set the height for the container
         decoration: BoxDecoration(
-          color: Colors.grey[300],
+          color: themeProvider.isDarkMode ? Color(0xff3E3E6766).withOpacity(0.4) : Colors.grey[300],
           borderRadius: BorderRadius.circular(5),
         ),
         child: TextField(
           controller: controller,
           keyboardType: keyboardType,
           maxLines: maxLines,
-          // style: const TextStyle(color: Colors.), // Grey text color
           decoration: InputDecoration(
             hintText: labelText,
-            hintStyle: const TextStyle(color: Colors.grey),
+            hintStyle: TextStyle(color:themeProvider.isDarkMode ?Colors.white : Colors.grey),
             border: InputBorder.none, // No border
-            contentPadding:
-                const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
           ),
           onChanged: (text) {
             setState(() {}); // To refresh the state
@@ -150,22 +149,23 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   // Helper method to build the phone number field with country code and flag
-  Widget _buildPhoneNumberField() {
-    return  IntlPhoneField(
-              decoration: InputDecoration(
-                labelText: 'Phone Number',
-                labelStyle: const TextStyle(color: Colors.grey),
-                filled: true,
-                fillColor: Colors.grey[300],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              initialCountryCode: 'US',
-              style: const TextStyle(color: Colors.grey), // Default set to USA
-              onChanged: (phone) {
-                print(phone.completeNumber); // You can use this number
-              },
-            );}
+  Widget _buildPhoneNumberField(ThemeProvider themeProvider) {
+    return IntlPhoneField(
+      decoration: InputDecoration(
+        hintText: 'Phone Number',
+        labelStyle: TextStyle(color:themeProvider.isDarkMode ?Colors.white : Colors.grey),
+        filled: true,
+        fillColor: themeProvider.isDarkMode ? Color(0xff3E3E6766).withOpacity(0.4) : Colors.grey[300],
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(5.0),
+          borderSide: BorderSide.none,
+        ),
+      ),
+      initialCountryCode: 'US',
+      style: TextStyle(color: themeProvider.isDarkMode ?Colors.white : Colors.grey), // Default set to USA
+      onChanged: (phone) {
+        print(phone.completeNumber); // You can use this number
+      },
+    );
+  }
 }

@@ -1,3 +1,4 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:calliverse/pages/ai_screen.dart';
 import 'package:calliverse/pages/audio_call_screen.dart';
 
@@ -7,8 +8,9 @@ import 'package:calliverse/pages/message_page.dart';
 import 'package:calliverse/pages/profile_screen.dart';
 import 'package:calliverse/pages/video_call_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class CalllistItemWidget extends StatelessWidget {
+class CalllistItemWidget extends StatefulWidget {
   final String name;
   final String imagePath;
   final String callTime;
@@ -23,7 +25,14 @@ class CalllistItemWidget extends StatelessWidget {
   });
 
   @override
+  _CalllistItemWidgetState createState() => _CalllistItemWidgetState();
+}
+
+class _CalllistItemWidgetState extends State<CalllistItemWidget> {
+  @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    
     return Padding(
       padding: const EdgeInsets.only(left: 2, right: 2, top: 8, bottom: 8),
       child: Row(
@@ -31,7 +40,7 @@ class CalllistItemWidget extends StatelessWidget {
         children: [
           CircleAvatar(
             radius: 24,
-            foregroundImage: AssetImage(imagePath),
+            foregroundImage: AssetImage(widget.imagePath),
           ),
           Expanded(
             child: Padding(
@@ -40,26 +49,26 @@ class CalllistItemWidget extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    name,
-                    style: const TextStyle(
+                    widget.name,
+                    style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
-                      color: Color(0xff0f1828),
+                      color: themeProvider.isDarkMode ? Colors.white : Color(0xff0f1828),
                     ),
                   ),
                   Row(
                     children: [
                       Icon(
-                        isMissedCall ? Icons.phone_missed_rounded : Icons.phone,
-                        color: isMissedCall ? Colors.red : Colors.green,
+                        widget.isMissedCall ? Icons.phone_missed_rounded : Icons.phone,
+                        color: widget.isMissedCall ? Colors.red : Colors.green,
                         size: 16,
                       ),
                       const SizedBox(width: 6),
                       Text(
-                        callTime,
-                        style: const TextStyle(
+                        widget.callTime,
+                        style:  TextStyle(
                           fontSize: 14,
-                          color: Colors.grey,
+                          color: themeProvider.isDarkMode?Colors.white: Colors.grey,
                         ),
                       ),
                     ],
@@ -91,6 +100,7 @@ class CalllistItemWidget extends StatelessWidget {
     );
   }
 }
+
 
 class Call extends StatefulWidget {
   const Call({super.key});
@@ -205,6 +215,7 @@ class _CallState extends State<Call> {
   }
 
   Widget _buildCallsScreen() {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Container(
       height: double.infinity,
       child: Stack(
@@ -212,7 +223,7 @@ class _CallState extends State<Call> {
         children: [
           Container(
             width: double.infinity,
-            decoration: const BoxDecoration(color: Color(0xffffffff)),
+            decoration: BoxDecoration(color:themeProvider.isDarkMode ? Color(0xff020520) : Color(0xffffffff)),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -222,15 +233,15 @@ class _CallState extends State<Call> {
                     elevation: 0,
                     toolbarHeight: 56,
                     automaticallyImplyLeading: false,
-                    backgroundColor: Colors.transparent,
+                    backgroundColor:themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
                     leadingWidth: 40,
                     titleSpacing: 0,
                     centerTitle: false,
                     leading: IconButton(
-                      icon: const Icon(
+                      icon:  Icon(
                         Icons.arrow_back_ios_new_outlined,
                         size: 18,
-                        color: Colors.black,
+                        color:  themeProvider.isDarkMode ? Colors.white : Colors.black,
                       ),
                       onPressed: () {
                         setState(() {
@@ -239,10 +250,10 @@ class _CallState extends State<Call> {
                         // Handle back button action
                       },
                     ),
-                    title: const Text(
+                    title:  Text(
                       'Calls',
                       style: TextStyle(
-                        color: Color(0xff0f1828),
+                        color: themeProvider.isDarkMode ? Colors.white : Color(0xff0f1828),
                         fontFamily: 'Poppins',
                         fontSize: 18,
                       ),
@@ -282,12 +293,14 @@ class _CallState extends State<Call> {
 
   @override
   Widget build(BuildContext context) {
+     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: _buildScreen(_selectedIndex),
       bottomNavigationBar:
           _selectedIndex != 2 // Show bottom nav only if not on ChatbotScreen
               ? BottomNavigationBar(
+                backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
                   type: BottomNavigationBarType.fixed,
                   currentIndex: _selectedIndex,
                   onTap: _onItemTapped,

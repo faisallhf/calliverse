@@ -1,34 +1,37 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:flutter/material.dart';
-import 'package:intl_phone_field/intl_phone_field.dart'; // Dependency for international phone number
+import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:provider/provider.dart'; // Dependency for international phone number
 
 class AddContact extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+       backgroundColor:themeProvider.isDarkMode ? Color(0xff020520) : Colors.white ,
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 96,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor:themeProvider.isDarkMode ? Color(0xff020520) : Colors.white ,
         leadingWidth: 40,
         titleSpacing: 0,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_outlined,
             size: 18,
-            color: Colors.black,
+             color:  themeProvider.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             Navigator.pop(context);
             // Handle back button action
           },
         ),
-        title: const Text(
+        title: Text(
           'New Contact',
           style: TextStyle(
-            color: Color(0xff0f1828),
+            color: themeProvider.isDarkMode ? Colors.white : Color(0xff0f1828),
             fontFamily: 'Poppins',
             fontSize: 18,
           ),
@@ -42,9 +45,10 @@ class AddContact extends StatelessWidget {
             // First Name Field
             TextField(
               decoration: InputDecoration(
-                labelText: 'First Name (Required)',
+                hintText: 'First Name (Required)',
+                labelStyle: TextStyle(color:themeProvider.isDarkMode ?Colors.white : Colors.grey),
                 filled: true,
-                fillColor: Colors.grey.shade300,
+                fillColor: themeProvider.isDarkMode ? Color(0xff3E3E6766).withOpacity(0.4) : Colors.grey[300],
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.0),
                   borderSide: BorderSide.none,
@@ -56,9 +60,10 @@ class AddContact extends StatelessWidget {
             // Last Name Field
             TextField(
               decoration: InputDecoration(
-                labelText: 'Last Name (Optional)',
+                hintText: 'Last Name (Optional)',
+                labelStyle: TextStyle(color:themeProvider.isDarkMode ?Colors.white : Colors.grey),
                 filled: true,
-                fillColor: Colors.grey[300],
+                fillColor: themeProvider.isDarkMode ? Color(0xff3E3E6766).withOpacity(0.4) : Colors.grey[300],
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.0),
                   borderSide: BorderSide.none,
@@ -69,22 +74,25 @@ class AddContact extends StatelessWidget {
 
             // Phone Number Field with IntlPhoneField
             IntlPhoneField(
-              decoration: InputDecoration(
-                labelText: 'Phone Number',
-                filled: true,
-                fillColor: Colors.grey[300],
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(5.0),
-                  borderSide: BorderSide.none,
-                ),
-              ),
-              initialCountryCode: 'US', // Default set to USA
-              onChanged: (phone) {
-                print(phone.completeNumber); // You can use this number
-              },
-            ),
+  decoration: InputDecoration(
+    hintText: 'Phone Number', 
+    labelStyle: TextStyle(color:themeProvider.isDarkMode ?Colors.white : Colors.grey),// Replaces labelText with hintText
+    filled: true,
+    fillColor:  themeProvider.isDarkMode ? Color(0xff3E3E6766).withOpacity(0.4) : Colors.grey[300],
+    border: OutlineInputBorder(
+      borderRadius: BorderRadius.circular(5.0),
+      borderSide: BorderSide.none,
+    ),
+  ),
+  initialCountryCode: 'US',
+  style: TextStyle(color: themeProvider.isDarkMode ?Colors.white : Colors.grey), // Default set to USA
+  onChanged: (phone) {
+    print(phone.completeNumber); // You can use this number
+  },
+),
 
-            SizedBox(height: 30),
+
+            SizedBox(height: 90),
 
             // Save Button
             Center(
@@ -92,7 +100,9 @@ class AddContact extends StatelessWidget {
                 width: double.infinity, // Full width as per the input fields
                 height: 50, // Adjust height
                 child: ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xFF095DEC), // Background color
                     foregroundColor: Colors.white, // Text color

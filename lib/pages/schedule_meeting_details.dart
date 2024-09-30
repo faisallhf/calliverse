@@ -1,5 +1,7 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:calliverse/pages/meeting_details.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class ScheduleMeetingPage extends StatefulWidget {
@@ -20,21 +22,22 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
 
   @override
   Widget build(BuildContext context) {
+     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 56,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
         leadingWidth: 40,
         titleSpacing: 0,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_outlined,
             size: 18,
-            color: Colors.black,
+            color: themeProvider.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             setState(() {
@@ -42,10 +45,10 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
             });
           },
         ),
-        title: const Text(
+        title: Text(
           'Schedule Meetings',
           style: TextStyle(
-            color: Color(0xff0f1828),
+            color:themeProvider.isDarkMode ? Colors.white : Color(0xff0f1828),
             fontFamily: 'Poppins',
             fontSize: 18,
           ),
@@ -60,30 +63,33 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
               // Container for Calendar and Time Picker
               Container(
                 decoration: BoxDecoration(
-                  color: Color(0xFFFCFCFC),
+                  color:themeProvider.isDarkMode  ? Color(0xff3E3E6766) 
+        : Color(0xffFCFCFC), 
                   border: Border.all(
-                      color: Color(0xffDEDEDE), width: 2), // Add border color
+                     color: themeProvider.isDarkMode 
+          ? Color(0xff3E3E67).withOpacity(0.4) 
+          : Color(0xffDEDEDE),  width: 2), // Add border color
                   borderRadius:
                       BorderRadius.circular(8), // Optional: rounded corners
                 ),
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
-                    _buildCalendar(),
+                    _buildCalendar(themeProvider),
                     SizedBox(
                         height: 16), // Space between calendar and time picker
-                    _buildTimePicker(), // Time Picker widget
+                    _buildTimePicker(themeProvider), // Time Picker widget
                   ],
                 ),
               ),
               SizedBox(height: 16),
 
               // Title TextField
-              _buildTextField("Title", _titleController, 50),
+              _buildTextField("Title", _titleController, 50,themeProvider,),
               SizedBox(height: 8),
 
               // Description TextField
-              _buildTextField("Description", _descriptionController, 117),
+              _buildTextField("Description", _descriptionController, 117,themeProvider),
               SizedBox(height: 8),
 
               // Add Reminder Checkbox
@@ -108,7 +114,7 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
               // Personal Notes TextField
 
               SizedBox(height: 8),
-              _buildTextField("Personal Notes", _descriptionController, 110),
+              _buildTextField("Personal Notes", _descriptionController, 110,themeProvider),
               SizedBox(height: 8),
 
               SizedBox(height: 16),
@@ -150,9 +156,11 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
   }
 
   // Calendar builder with enforced background color
-  Widget _buildCalendar() {
+  Widget _buildCalendar(dynamic themeProvider) {
     return Container(
-      color: Color(0xFFFCFCFC), // Set the background color here
+      color: themeProvider.isDarkMode 
+        ? Colors.transparent 
+        : Color(0xffFCFCFC), // Set the background color here
       child: TableCalendar(
         calendarFormat: CalendarFormat.month,
         focusedDay: _focusedDay,
@@ -169,16 +177,19 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
             shape: BoxShape.circle,
           ),
           outsideDecoration: BoxDecoration(
-            color: Color(
-                0xFFFCFCFC), // Set outside day cells to the same background color
+           color: themeProvider.isDarkMode 
+            ? Colors.transparent
+            : Color(0xFFFCFCFC), // Set outside day cells to the same background color
           ),
           defaultDecoration: BoxDecoration(
-            color:
-                Color(0xFFFCFCFC), // Set default cells to match the background
+            color: themeProvider.isDarkMode 
+            ? Colors.transparent
+            : Color(0xFFFCFCFC), // Set default cells to match the background
           ),
           disabledDecoration: BoxDecoration(
-            color: Color(
-                0xFFFCFCFC), // Disabled days should also match the background
+           color: themeProvider.isDarkMode 
+            ? Color(0xff3E3E67)
+            : Color(0xFFFCFCFC), // Disabled days should also match the background
           ),
         ),
         headerStyle: HeaderStyle(
@@ -188,12 +199,22 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
           leftChevronIcon: Icon(Icons.chevron_left, color: Colors.blue),
           rightChevronIcon: Icon(Icons.chevron_right, color: Colors.blue),
           decoration: BoxDecoration(
-            color: Color(0xFFFCFCFC), // Header background color
+            color: themeProvider.isDarkMode 
+            ? Colors.transparent
+            : Color(0xFFFCFCFC), // Header background color
           ),
         ),
         daysOfWeekStyle: DaysOfWeekStyle(
+          weekdayStyle: TextStyle(
+                    color: themeProvider.isDarkMode ? Colors.white : const Color(0xFF6A6A6A),
+                  ),
+                   weekendStyle: TextStyle(
+                    color: themeProvider.isDarkMode ? Colors.white : const Color(0xFF6A6A6A),
+                  ),
           decoration: BoxDecoration(
-            color: Color(0xFFFCFCFC), // Days of the week background color
+            color: themeProvider.isDarkMode 
+            ? Colors.transparent 
+            :  Colors.transparent, // Days of the week background color
           ),
         ),
         selectedDayPredicate: (day) {
@@ -210,14 +231,14 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
   }
 
   // Time picker builder with AM/PM
-  Widget _buildTimePicker() {
+  Widget _buildTimePicker(dynamic themeProvider) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
           "Time",
           style: TextStyle(
-              fontSize: 16, color: Colors.black, fontWeight: FontWeight.w500),
+              fontSize: 16, color:themeProvider.isDarkMode?Colors.white: Colors.black, fontWeight: FontWeight.w500),
         ),
         // SizedBox(width: 60,),
         // Expanded(
@@ -225,7 +246,7 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
         // ),
         Row(
           children: [
-            _buildDropdownTimePicker(),
+            _buildDropdownTimePicker(themeProvider),
             SizedBox(width: 8),
             _buildAmPmSelector("AM", _isAm),
             // SizedBox(width: 8),
@@ -236,7 +257,7 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
     );
   }
 
-  Widget _buildDropdownTimePicker() {
+  Widget _buildDropdownTimePicker(dynamic themeProvider) {
     String formattedTime = _formatTime();
     List<String> timeOptions = _generateTimeOptions();
     if (!timeOptions.contains(formattedTime)) {
@@ -244,15 +265,20 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
     }
 
     return DropdownButton<String>(
-      iconEnabledColor: Color(0xffF0F3F7),
-      focusColor: Color(0xffF0F3F7),
-      dropdownColor: Color(0xffF0F3F7),
-      iconDisabledColor: Color(0xffF0F3F7),
+      iconEnabledColor:  themeProvider.isDarkMode 
+            ? Color(0xFFFCFCFC):Color(0xff3E3E67),
+      focusColor:  themeProvider.isDarkMode 
+            ? Color(0xFFFCFCFC):Color(0xff3E3E67),
+      dropdownColor:  themeProvider.isDarkMode 
+            ?Color(0xff3E3E67): Color(0xFFFCFCFC),
+      iconDisabledColor:  themeProvider.isDarkMode 
+             ? Color(0xFFFCFCFC):Color(0xff3E3E67),
       value: formattedTime,
       items: timeOptions.map<DropdownMenuItem<String>>((String value) {
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Text(value,style: TextStyle(color: themeProvider.isDarkMode 
+            ? Color(0xFFFCFCFC):Color(0xff3E3E67),),),
         );
       }).toList(),
       onChanged: (String? newValue) {
@@ -314,12 +340,12 @@ class _ScheduleMeetingPageState extends State<ScheduleMeetingPage> {
 
   // Helper method to build text fields
   Widget _buildTextField(
-      String label, TextEditingController controller, double height) {
+      String label, TextEditingController controller, double height, dynamic themeProvider) {
     return Container(
       width: double.infinity, // Align with the width as per your image
       height: height, // Adjust height as necessary
       padding: EdgeInsets.symmetric(horizontal: 10),
-      color: Color(0xffF7F7FC),
+      color: themeProvider.isDarkMode?Color(0xff3E3E6766) : Color(0xffF7F7FC),
       child: TextField(
         controller: controller,
         decoration: InputDecoration(

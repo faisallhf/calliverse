@@ -1,5 +1,9 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
+import 'package:calliverse/pages/connection_page.dart';
 import 'package:calliverse/pages/edit_profile.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+// Ensure this is the path to your ThemeProvider
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -7,80 +11,80 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  bool isDarkMode = false; // State to manage dark mode toggle
-  bool isNotificationsEnabled = true; // State to manage notifications toggle
-
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 56,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.white,
+        backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
         leadingWidth: 40,
         titleSpacing: 0,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(
+          icon: Icon(
             Icons.arrow_back_ios_new_outlined,
             size: 18,
-            color: Colors.black,
+            color: themeProvider.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             Navigator.pop(context);
           },
         ),
-        title: const Text(
+        title: Text(
           'Profile',
           style: TextStyle(
             fontWeight: FontWeight.w500,
-            color: Color(0xff0f1828),
+            color: themeProvider.isDarkMode ? Colors.white : Color(0xff0f1828),
             fontFamily: 'Poppins',
             fontSize: 18,
           ),
         ),
       ),
       body: SingleChildScrollView(
-        // Wrap the Column with SingleChildScrollView
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               // Circular Avatar
-              const Center(
+              Center(
                 child: CircleAvatar(
+                  backgroundColor: themeProvider.isDarkMode?Colors.transparent:Colors.transparent,
                   radius: 50,
-                  backgroundImage: AssetImage('assets/images/image4.png'),
+                  backgroundImage: const AssetImage('assets/images/image4.png'),
                 ),
               ),
               const SizedBox(height: 15),
-              const Text(
+              Text(
                 'Danny Hopkins',
                 style: TextStyle(
+                  color:themeProvider.isDarkMode ? Colors.white : Color(0xff0f1828) ,
                   fontWeight: FontWeight.bold,
                   fontSize: 16,
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
+              Text(
                 '+1234567890',
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
-                  color: Color(0xff888888),
+                  color:themeProvider.isDarkMode ? Colors.white : Color(0xff888888),
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
+              Text(
                 'Experienced designer, shaping intuitive \ninterfaces and seamless user journeys',
                 style: TextStyle(
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w400,
                   fontSize: 14,
-                  color: Color(0xff888888),
+                  color:themeProvider.isDarkMode ? Colors.white : Color(0xff888888),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -89,53 +93,50 @@ class _ProfileScreenState extends State<ProfileScreen> {
               OptionTile(
                 icon: Icons.person_outline_outlined,
                 text: 'Edit Profile',
+                textColor: themeProvider.isDarkMode?Colors.white:Colors.black,
+                iconColor:themeProvider.isDarkMode?Colors.white:Colors.black ,
+                 trailing: Icon(Icons.arrow_forward_ios, size: 16, color: themeProvider.isDarkMode ? Colors.white : Colors.black),
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => EditProfileScreen()),
+                    MaterialPageRoute(builder: (context) => EditProfileScreen()),
                   );
                 },
               ),
               const SizedBox(height: 10),
-
               OptionTile(
                 icon: Icons.translate_outlined,
                 text: 'Translation Language',
-                trailing: const Row(
+                 textColor: themeProvider.isDarkMode?Colors.white:Colors.black,
+                iconColor:themeProvider.isDarkMode?Colors.white:Colors.black ,
+                trailing: Row(
                   children: [
-                    Text(
+                    const Text(
                       'Eng (US)',
                       style: TextStyle(color: Colors.blue, fontSize: 14),
                     ),
-                    SizedBox(
-                      width: 9,
-                    ),
-                    Icon(Icons.arrow_forward_ios, size: 16),
+                    const SizedBox(width: 9),
+                    Icon(Icons.arrow_forward_ios, size: 16,color: themeProvider.isDarkMode?Colors.white:Colors.black ,),
                   ],
                 ),
                 onTap: () {},
               ),
-              // const SizedBox(height: 10),
               OptionTile(
                 icon: Icons.notifications_outlined,
                 text: 'Notifications',
+                 textColor: themeProvider.isDarkMode?Colors.white:Colors.black,
+                iconColor:themeProvider.isDarkMode?Colors.white:Colors.black ,
                 trailing: Transform.scale(
-                  scale: 0.8, // Reduce the size of the switch
+                  scale: 0.8,
                   child: Switch(
-                    value: isNotificationsEnabled,
+                    value: false, // Replace with your notification state variable
                     onChanged: (value) {
-                      setState(() {
-                        isNotificationsEnabled = value;
-                      });
+                   
                     },
-                    activeColor: Colors.blue, // Thumb color when active
-                    inactiveThumbColor:
-                        Colors.grey, // Thumb color when inactive
-                    activeTrackColor:
-                        Colors.grey[300], // Track color when active
-                    inactiveTrackColor:
-                        Colors.grey[300], // Track color when inactive
+                    activeColor: Colors.blue,
+                    inactiveThumbColor: Colors.grey,
+                    activeTrackColor: Colors.grey[300],
+                    inactiveTrackColor: Colors.grey[300],
                   ),
                 ),
                 onTap: () {},
@@ -144,30 +145,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
               OptionTile(
                 icon: Icons.download_rounded,
                 text: 'Download Chat',
+                 textColor: themeProvider.isDarkMode?Colors.white:Colors.black,
+                iconColor:themeProvider.isDarkMode?Colors.white:Colors.black ,
+                 trailing: Icon(Icons.arrow_forward_ios, size: 16, color: themeProvider.isDarkMode ? Colors.white : Colors.black),
                 onTap: () {},
               ),
-
-              // const SizedBox(height: 10),
-
+              const SizedBox(height: 10),
               OptionTile(
                 icon: Icons.dark_mode_outlined,
                 text: 'Dark Mode',
+                 textColor: themeProvider.isDarkMode?Colors.white:Colors.black,
+                iconColor:themeProvider.isDarkMode?Colors.white:Colors.black ,
                 trailing: Transform.scale(
-                  scale: 0.8, // Reduce the size of the switch
+                  scale: 0.8,
                   child: Switch(
-                    value: isDarkMode,
+                    value: themeProvider.isDarkMode,
                     onChanged: (value) {
-                      setState(() {
-                        isDarkMode = value;
-                      });
+                      themeProvider.toggleTheme();
                     },
-                    activeColor: Colors.blue, // Thumb color when active
-                    inactiveThumbColor:
-                        Colors.grey, // Thumb color when inactive
-                    activeTrackColor:
-                        Colors.grey[300], // Track color when active
-                    inactiveTrackColor:
-                        Colors.grey[300], // Track color when inactive
+                    activeColor: Colors.blue,
+                    inactiveThumbColor: Colors.grey,
+                    activeTrackColor: Colors.grey[300],
+                    inactiveTrackColor: Colors.grey[300],
                   ),
                 ),
                 onTap: () {},
@@ -176,18 +175,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
               OptionTile(
                 icon: Icons.logout_rounded,
                 text: 'Logout',
-                onTap: () {},
+                 textColor: themeProvider.isDarkMode?Colors.white:Colors.black,
+                iconColor:themeProvider.isDarkMode?Colors.white:Colors.black ,
+                 trailing: Icon(Icons.arrow_forward_ios, size: 16, color: themeProvider.isDarkMode ? Colors.white : Colors.black),
+                onTap: () {
+                  Navigator.push(context, MaterialPageRoute(builder:(context)=>ConnectionPage()));
+                },
               ),
               const SizedBox(height: 10),
-
               OptionTile(
                 icon: Icons.delete_outline_outlined,
                 text: 'Delete Account',
-                textColor: Colors.red, // Set text color to red
-                iconColor: Colors.red, // Set icon color to red
+                textColor: Colors.red,
+                iconColor: Colors.red,
+                 trailing: Icon(Icons.arrow_forward_ios, size: 16, color: themeProvider.isDarkMode ? Colors.white : Colors.black),
                 onTap: () {},
               ),
-
               const SizedBox(height: 10),
             ],
           ),
@@ -200,47 +203,46 @@ class _ProfileScreenState extends State<ProfileScreen> {
 class OptionTile extends StatelessWidget {
   final IconData icon;
   final String text;
-  final Widget? trailing; // For adding widgets like Switch or Icons
+  final Widget? trailing;
   final VoidCallback onTap;
-  final Color? textColor; // Parameter for text color
-  final Color? iconColor; // Parameter for icon color
+  final Color? textColor;
+  final Color? iconColor;
 
-  const OptionTile({
+   OptionTile({
     super.key,
     required this.icon,
     required this.text,
     this.trailing,
     required this.onTap,
-    this.textColor = Colors.black, // Default text color is black
-    this.iconColor = Colors.black, // Default icon color is black
+    this.textColor = Colors.black,
+    this.iconColor = Colors.black,
   });
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return GestureDetector(
       onTap: onTap,
       child: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: 10.0), // Padding on both sides
+        padding: const EdgeInsets.symmetric(horizontal: 10.0),
         child: Column(
           children: [
             Row(
               children: [
-                Icon(icon, size: 20, color: iconColor), // Apply iconColor here
+                Icon(icon, size: 20, color: iconColor),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Text(
                     text,
-                    style: TextStyle(
-                        fontSize: 14, color: textColor), // Apply textColor here
+                    style: TextStyle(fontSize: 14, color: textColor),
                   ),
                 ),
-                trailing ?? const Icon(Icons.arrow_forward_ios, size: 16),
+                trailing ??  Icon(Icons.arrow_forward_ios, size: 16,),
               ],
             ),
-            const Divider(
-              thickness: 1,
-              color: Color(0xffDDDDDD), // Line color
+             Divider(
+              thickness: 0.5,
+              color:themeProvider.isDarkMode?Colors.transparent: Color(0xffDDDDDD),
             ),
           ],
         ),
