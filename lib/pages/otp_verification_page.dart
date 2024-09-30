@@ -1,6 +1,8 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pinput/pinput.dart';
+import 'package:provider/provider.dart';
 
 class OtpVerificationPage extends StatefulWidget {
   final String typeofVerification;
@@ -50,22 +52,23 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
 
   @override
   Widget build(BuildContext context) {
+     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Color(0xFFFFFFFF),
+      backgroundColor:themeProvider.isDarkMode ? Color(0xff020520) : Colors.white ,
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 56,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
         leadingWidth: 40,
         titleSpacing: 0,
         centerTitle: false,
         leading: IconButton(
-          icon: const Icon(
+          icon:  Icon(
             Icons.arrow_back_ios_new_outlined,
             size: 18,
-            color: Colors.black,
+            color: themeProvider.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             context.pushNamed('emailsignupPage');
@@ -77,41 +80,62 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
           Container(
             padding: EdgeInsets.symmetric(horizontal: 60),
             child: Image.asset(
-              "assets/images/logo.png",
+             themeProvider.isDarkMode 
+                ? "assets/images/logo.png" // Dark mode image
+                : "assets/images/logo_light.png",),
               height: 200,
             ),
-          ),
+          
           Text(
             "Enter Code",
             style: TextStyle(
-              fontSize: 30,
-              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              fontWeight: FontWeight.w700,
               fontFamily: "Mulish",
+              color: themeProvider.isDarkMode?Color(0xffffffff):Color(0xff0F1828)
+
             ),
           ),
           SizedBox(height: 10),
           Text(
             "We have sent you a ${widget.typeofVerification} with the \ncode to ${widget.data}",
+            style: TextStyle(
+             fontSize: 14,
+              fontWeight: FontWeight.w400,
+              fontFamily: "Mulish",
+              color: themeProvider.isDarkMode?Color(0xffffffff):Color(0xff0F1828)
+
+            ),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: 40),
-          Pinput(
-            length: 4,
-            controller: _otpController,
-            defaultPinTheme: defaultPinTheme,
-            focusedPinTheme: defaultPinTheme.copyWith(
-              decoration: defaultPinTheme.decoration?.copyWith(
-                    border: Border.all(color: Colors.transparent),
-                  ) ??
-                  BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
-                    border: Border.all(color: Colors.transparent),
-                  ),
-            ),
-            onCompleted: (pin) =>
-                _submitOtp(), // Automatically submit when OTP is completed
-          ),
+         Pinput(
+  length: 4,
+  controller: _otpController,
+  defaultPinTheme: defaultPinTheme,
+  focusedPinTheme: defaultPinTheme.copyWith(
+    decoration: defaultPinTheme.decoration?.copyWith(
+      border: Border.all(
+        color: themeProvider.isDarkMode 
+          ? Color(0xff3E3E6766).withOpacity(0.4) 
+          : Colors.white,
+      ),
+    ) ??
+    BoxDecoration(
+      color: themeProvider.isDarkMode 
+        ? Color(0xff3E3E6766).withOpacity(0.4) 
+        : Colors.white,
+      borderRadius: BorderRadius.circular(50),
+      border: Border.all(
+        color: themeProvider.isDarkMode 
+          ? Color(0xff3E3E6766).withOpacity(0.4) 
+          : Colors.white,
+      ),
+    ),
+  ),
+  onCompleted: (pin) => _submitOtp(), // Automatically submit when OTP is completed
+),
+
           SizedBox(height: 20),
           TextButton(
             onPressed: () {
@@ -120,10 +144,10 @@ class _OtpVerificationPageState extends State<OtpVerificationPage> {
             child: Text(
               "Resend Code",
               style: TextStyle(
-                fontSize: 18,
+                fontSize: 16,
                 fontWeight: FontWeight.w600,
                 fontFamily: "Mulish",
-                color: Color(0xFF095DEC),
+                color:themeProvider.isDarkMode?Color(0xFF095DEC): Color(0xFF095DEC),
               ),
             ),
           ),
