@@ -1,5 +1,7 @@
+import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class SubscriptionPage extends StatefulWidget {
   const SubscriptionPage({super.key});
@@ -27,181 +29,215 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      backgroundColor: Colors.white,
+      backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 56,
         automaticallyImplyLeading: false,
-        backgroundColor: Colors.transparent,
+        backgroundColor: themeProvider.isDarkMode ? Color(0xff020520) : Colors.white,
         leadingWidth: 40,
         titleSpacing: 0,
         centerTitle: false,
+       
         leading: IconButton(
-          icon: ImageIcon(
-            AssetImage('assets/images/close.png'),
-            size: 25,
-            color: Colors.black,
+          icon: Icon(
+            Icons.close,
+            size: 26,
+            color: themeProvider.isDarkMode ? Colors.white : Colors.black,
           ),
           onPressed: () {
             context.pushNamed('login_page');
-          },
-        ),
+          },),
+
+        
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Unlock All Features with Premium",
-              style: TextStyle(
-                fontSize: 22,
-                fontWeight: FontWeight.bold,
-                fontFamily: 'Poppins',
+        child: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Unlock All Features with Premium",
+                style: TextStyle(
+                  fontSize: 26,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: 'Poppins',
+                ),
               ),
-            ),
-            SizedBox(height: 10),
-            _buildSubscriptionToggle(),
-            SizedBox(height: 10),
-            Text(
-              "Select a plan",
-              style: TextStyle(fontSize: 16),
-            ),
-            SizedBox(height: 10),
-            _buildPlanSelector(),
-            Divider(),
-            _buildTermsText(),
-            SizedBox(height: 10),
-            _buildContinueButton(),
-            SizedBox(height: 20),
-            _buildFreeTrialText(context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSubscriptionToggle() {
-    return Row(
-      children: [
-        _buildToggleButton('Monthly', isMonthly, () {
-          setState(() {
-            isMonthly = true;
-          });
-        }),
-        _buildToggleButton('Annually', !isMonthly, () {
-          setState(() {
-            isMonthly = false;
-          });
-        }),
-      ],
-    );
-  }
-
-  Widget _buildToggleButton(String text, bool isSelected, VoidCallback onTap) {
-    return InkWell(
-      onTap: onTap,
-      child: Container(
-        width: 150,
-        height: 45,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          color: isSelected ? Colors.blue : Colors.transparent,
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Text(
-          text,
-          style: TextStyle(
-            color: isSelected ? Colors.white : Colors.black,
-            fontWeight: FontWeight.w600,
+              SizedBox(height: 10),
+              _buildSubscriptionToggle(themeProvider),
+              SizedBox(height: 10),
+              Text(
+                "Select a plan",
+                style: TextStyle(fontSize: 16,fontFamily: 'Poppins',fontWeight: FontWeight.w400,
+                color: themeProvider.isDarkMode?Colors.white:Color(0xff393939)),
+              ),
+              SizedBox(height: 10),
+              _buildPlanSelector(themeProvider),
+              SizedBox(height: 5,),
+              _buildTermsText(themeProvider),
+              SizedBox(height: 10),
+              _buildContinueButton(themeProvider),
+              SizedBox(height: 20),
+              _buildFreeTrialText(context,themeProvider),
+            ],
           ),
         ),
       ),
     );
   }
 
-  Widget _buildPlanSelector() {
+  Widget _buildSubscriptionToggle(dynamic themeProvider) {
+  return Stack(
+    children: [
+      Container(
+        width: double.infinity, // Total width of both buttons plus padding
+        height: 45, // Match height with toggle buttons
+        decoration: BoxDecoration(
+          color: themeProvider.isDarkMode?Color(0xff1A1C3D): Color(0xffF7F7FC), // Background color for the row
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          _buildToggleButton('Monthly', isMonthly, () {
+            setState(() {
+              isMonthly = true;
+            });
+          },themeProvider),
+          _buildToggleButton('Annually', !isMonthly, () {
+            setState(() {
+              isMonthly = false;
+            });
+          },themeProvider),
+        ],
+      ),
+    ],
+  );
+}
+
+Widget _buildToggleButton(String text, bool isSelected, VoidCallback onTap, dynamic themeProvider) {
+  return InkWell(
+    onTap: onTap,
+    child: Container(
+      width: 160, // Adjust width to fit in the Stack container
+      height: 45, // Height of the button
+      alignment: Alignment.center,
+      decoration: BoxDecoration(
+        color: isSelected ? Colors.blue : Colors.transparent, // Highlight selected button
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Text(
+        text,
+        style: TextStyle(
+          fontFamily: 'Poppins',
+          fontSize: 16,
+          color: isSelected ? Color(0xffFDFDFD) :themeProvider.isDarkMode?Colors.white: Colors.black,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
+    ),
+  );
+}
+
+
+  Widget _buildPlanSelector(dynamic themeProvider) {
     return Column(
       children: [
         Container(
-          height: 140,
-          width: MediaQuery.of(context).size.width,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: premiumTypes.length,
-            itemBuilder: (BuildContext context, int index) {
-              bool isSelected = selectedPlanIndex == index;
-              return Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      selectedPlanIndex = index;
-                    });
-                  },
-                  child: Container(
-                    height: 140,
-                    width: 260,
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      border: isSelected
-                          ? Border.all(color: Colors.blue, width: 2)
-                          : Border.all(color: Colors.white, width: 2),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 20.0, top: 15.0),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                premiumTypes[index],
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xFF095DEC),
-                                ),
-                              ),
-                              if (isSelected)
-                                Icon(
-                                  Icons.check,
-                                  color: Colors.blue,
-                                  weight: 20,
-                                ),
-                            ],
-                          ),
-                          SizedBox(height: 6),
-                          Text(
-                            packages[index],
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
-                          ),
-                          SizedBox(height: 20.0),
-                          Text(
-                            prices[index],
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.black,
-                            ),
-                          ),
-                        ],
+  height: 140,
+  width: MediaQuery.of(context).size.width,
+  child: ListView.builder(
+    physics: BouncingScrollPhysics(),
+    scrollDirection: Axis.horizontal,
+    itemCount: premiumTypes.length,
+    itemBuilder: (BuildContext context, int index, ) {
+      bool isSelected = selectedPlanIndex == index;
+      return Padding(
+        padding: EdgeInsets.only(right: 10),
+        child: GestureDetector(
+          onTap: () {
+            setState(() {
+              selectedPlanIndex = index;
+            });
+          },
+          child: Container(
+            height: 140,
+            width: 260,
+            decoration: BoxDecoration(
+              color:themeProvider.isDarkMode?Colors.transparent: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              border: isSelected
+                  ? Border.all(color:themeProvider.isDarkMode?Color(0xff095DEC): Color(0xff095DEC), width: 2)
+                  : Border.all(color:themeProvider.isDarkMode?Color(0xffBFBFBF): Color(0xffBFBFBF), width: 2),
+            ),
+            child: Padding(
+              padding: EdgeInsets.only(left: 20.0, top: 15.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        premiumTypes[index],
+                        style: TextStyle(
+                          fontFamily: 'Poppins',
+                          fontSize: 14,
+                          fontWeight: FontWeight.w500,
+                          color:themeProvider.isDarkMode?Color(0xFF095DEC): Color(0xFF095DEC),
+                        ),
                       ),
+                      // Always keep space for the icon, even when not selected
+                      SizedBox(
+                        width: 24, // Same size as the Icon's width
+                        child: isSelected
+                            ? Icon(
+                              
+                                Icons.check_rounded,
+                                color:themeProvider.isDarkMode?Color(0xFF095DEC): Color(0xFF095DEC),
+                                size: 20,
+                              )
+                            : SizedBox(), // Empty placeholder when not selected
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 6),
+                  Text(
+                    packages[index],
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 24,
+                      fontWeight: FontWeight.w500,
+                      color:themeProvider.isDarkMode?Color(0xffFFFFFF): Colors.black,
                     ),
                   ),
-                ),
-              );
-            },
+                  SizedBox(height: 20.0),
+                  Text(
+                    prices[index],
+                    style: TextStyle(
+                      fontFamily: 'Poppins',
+                      fontSize: 16,
+                      fontWeight: FontWeight.w500,
+                      color:themeProvider.isDarkMode?Colors.white: Color(0xff393939),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
+      );
+    },
+  ),
+),
+
         SizedBox(height: 10),
         Stack(
           children: [
@@ -210,55 +246,65 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
               height: 130,
               width: 300,
               decoration: BoxDecoration(
-                color: Colors.white,
+
+                color:themeProvider.isDarkMode?Colors.transparent: Colors.white,
                 border: Border.all(
-                  color: Color(0xFFBFBFBF),
+                  color:themeProvider.isDarkMode?Color(0xFFBFBFBF): Color(0xFFBFBFBF),
                   width: 1.5,
                 ),
-                borderRadius: BorderRadius.circular(8),
+                borderRadius: BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8)),
               ),
             ),
+            
             Container(
               margin: const EdgeInsets.only(left: 75, top: 0),
-              padding: const EdgeInsets.only(left: 47, top: 3),
+              // padding: const EdgeInsets.only(left: 47, top: 3),
               height: 30,
               width: 150,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color:themeProvider.isDarkMode?Color(0xff020520): Colors.white,
                 border: Border.all(
-                  color: Color(0xFFBFBFBF),
+                  color:themeProvider.isDarkMode?Color(0xFFBFBFBF): Color(0xFFBFBFBF),
                   width: 1.5,
                 ),
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: const Text(
-                "Features",
-                style: TextStyle(
-                  fontWeight: FontWeight.w400,
-                  fontSize: 12,
-                  fontFamily: 'Poppins',
+              child: Center(
+                child: Text(
+                  "Features",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 12,
+                    fontFamily: 'Poppins',
+                    color:themeProvider.isDarkMode?Colors.white: Color(0xff505254)
+                  ),
                 ),
               ),
             ),
             Container(
-              color: Colors.white,
+              color:themeProvider.isDarkMode?Colors.transparent: Colors.white,
               margin: const EdgeInsets.only(left: 30, top: 40),
-              child: const Text(
+              child: Text(
                 "✓  Lorem Ipsum \n✓  Lorem Ipsum \n✓  Lorem Ipsum  ",
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
                   fontSize: 16,
                   fontFamily: 'Poppins',
+                  color:themeProvider.isDarkMode?Colors.white: Color(0xff393939)
                 ),
               ),
+             
             ),
+            
           ],
         ),
       ],
     );
   }
 
-  Widget _buildTermsText() {
+  Widget _buildTermsText(dynamic themeProvider) {
     return Text.rich(
       TextSpan(
         text:
@@ -267,39 +313,48 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
           fontSize: 10,
           fontFamily: 'Poppins',
           fontWeight: FontWeight.w500,
+          color:themeProvider.isDarkMode?Colors.white: Color(0xff545454)
         ),
         children: [
           TextSpan(
             text: "Terms",
             style: TextStyle(
-              fontWeight: FontWeight.bold,
+              fontSize: 10,
+          fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+              color:themeProvider.isDarkMode?Colors.white: Color(0xff545454),
               decoration: TextDecoration.underline,
             ),
           ),
-          TextSpan(text: "."),
+          TextSpan(text: ".",
+          style: TextStyle(
+            color:themeProvider.isDarkMode?Colors.white: Color(0xff545454),
+          )),
         ],
       ),
     );
   }
 
-  Widget _buildContinueButton() {
+  Widget _buildContinueButton(dynamic themeProvider) {
     return ElevatedButton(
       onPressed: () {},
       style: ElevatedButton.styleFrom(
-        backgroundColor: Color(0xFF0081FF),
+        backgroundColor:themeProvider.isDarkMode?Color(0xFF095DEC): Color(0xFF095DEC),
         minimumSize: Size(double.infinity, 50),
       ),
       child: Text(
         "Continue",
         style: TextStyle(
-          fontSize: 18,
-          color: Colors.white,
+          fontFamily: 'Poppins',
+          fontWeight: FontWeight.w700,
+          fontSize: 16,
+          color:themeProvider.isDarkMode?Color(0xffFDFDFD): Color(0xffFDFDFD),
         ),
       ),
     );
   }
 
-  Widget _buildFreeTrialText(BuildContext context) {
+  Widget _buildFreeTrialText(BuildContext context, dynamic themeProvider) {
     return GestureDetector(
       onTap: () {
         context.pushNamed("call_page");
@@ -309,10 +364,10 @@ class _SubscriptionPageState extends State<SubscriptionPage> {
         child: Text(
           "Start Free Trial",
           style: TextStyle(
-            color: Colors.blue,
+            color:themeProvider.isDarkMode?Color(0xff095DEC): Color(0xff095DEC),
             fontSize: 16,
             fontFamily: 'Mulish',
-            fontWeight: FontWeight.w500,
+            fontWeight: FontWeight.w600,
           ),
         ),
       ),
