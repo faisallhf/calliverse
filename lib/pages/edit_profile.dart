@@ -150,22 +150,32 @@ class _EditProfileScreenState extends State<EditProfileScreen> {
 
   // Helper method to build the phone number field with country code and flag
   Widget _buildPhoneNumberField(ThemeProvider themeProvider) {
-    return IntlPhoneField(
-      decoration: InputDecoration(
-        hintText: 'Phone Number',
-        labelStyle: TextStyle(color:themeProvider.isDarkMode ?Colors.white : Colors.grey),
-        filled: true,
-        fillColor: themeProvider.isDarkMode ? Color(0xff3E3E6766).withOpacity(0.4) : Colors.grey[300],
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(5.0),
-          borderSide: BorderSide.none,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: IntlPhoneField(
+        decoration: InputDecoration(
+          hintText: 'Phone Number',
+          hintStyle: TextStyle(
+                              fontFamily: 'Mulish',
+                              fontWeight: FontWeight.w600,
+                              color:themeProvider.isDarkMode?Color(0xffADB5BD): Color(0xffADB5BD),
+                              fontSize: 14,
+                            ),
+          labelStyle: TextStyle(color:themeProvider.isDarkMode ?Colors.white : Colors.grey),
+          filled: true,
+          fillColor: themeProvider.isDarkMode ? Color(0xff3E3E6766).withOpacity(0.4) : Colors.grey[300],
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(5.0),
+            borderSide: BorderSide.none,
+          ),
+           counterText: '',
         ),
+        initialCountryCode: 'US',
+        style: TextStyle(color: themeProvider.isDarkMode ?Colors.white : Colors.grey), // Default set to USA
+        onChanged: (phone) {
+          print(phone.completeNumber); // You can use this number
+        },
       ),
-      initialCountryCode: 'US',
-      style: TextStyle(color: themeProvider.isDarkMode ?Colors.white : Colors.grey), // Default set to USA
-      onChanged: (phone) {
-        print(phone.completeNumber); // You can use this number
-      },
     );
   }
 }

@@ -46,7 +46,18 @@ class AddContact extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 hintText: 'First Name (Required)',
-                labelStyle: TextStyle(color:themeProvider.isDarkMode ?Colors.white : Colors.grey),
+                hintStyle: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontWeight: FontWeight.w600,
+                            color:themeProvider.isDarkMode?Color(0xffADB5BD): Color(0xffADB5BD),
+                            fontSize: 14,
+                          ),
+                labelStyle:TextStyle(
+                            fontFamily: 'Mulish',
+                            fontWeight: FontWeight.w600,
+                            color:themeProvider.isDarkMode?Color(0xffADB5BD): Color(0xffADB5BD),
+                            fontSize: 14,
+                          ),
                 filled: true,
                 fillColor: themeProvider.isDarkMode ? Color(0xff3E3E6766).withOpacity(0.4) : Colors.grey[300],
                 border: OutlineInputBorder(
@@ -61,6 +72,12 @@ class AddContact extends StatelessWidget {
             TextField(
               decoration: InputDecoration(
                 hintText: 'Last Name (Optional)',
+                hintStyle: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontWeight: FontWeight.w600,
+                            color:themeProvider.isDarkMode?Color(0xffADB5BD): Color(0xffADB5BD),
+                            fontSize: 14,
+                          ),
                 labelStyle: TextStyle(color:themeProvider.isDarkMode ?Colors.white : Colors.grey),
                 filled: true,
                 fillColor: themeProvider.isDarkMode ? Color(0xff3E3E6766).withOpacity(0.4) : Colors.grey[300],
@@ -76,6 +93,12 @@ class AddContact extends StatelessWidget {
             IntlPhoneField(
   decoration: InputDecoration(
     hintText: 'Phone Number', 
+    hintStyle: TextStyle(
+                            fontFamily: 'Mulish',
+                            fontWeight: FontWeight.w600,
+                            color:themeProvider.isDarkMode?Color(0xffADB5BD): Color(0xffADB5BD),
+                            fontSize: 14,
+                          ),
     labelStyle: TextStyle(color:themeProvider.isDarkMode ?Colors.white : Colors.grey),// Replaces labelText with hintText
     filled: true,
     fillColor:  themeProvider.isDarkMode ? Color(0xff3E3E6766).withOpacity(0.4) : Colors.grey[300],
@@ -83,6 +106,7 @@ class AddContact extends StatelessWidget {
       borderRadius: BorderRadius.circular(5.0),
       borderSide: BorderSide.none,
     ),
+    counterText: '',
   ),
   initialCountryCode: 'US',
   style: TextStyle(color: themeProvider.isDarkMode ?Colors.white : Colors.grey), // Default set to USA
