@@ -2,7 +2,6 @@ import 'package:calliverse/pages/ThemeProvider.dart';
 import 'package:calliverse/router/router_config.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
- // Import your ThemeProvider
 
 void main() {
   runApp(
