@@ -54,7 +54,7 @@ class CalliverseRouter {
           String typeofVerification = state.pathParameters['type'] ?? '';
           String data = state.pathParameters['data'] ?? '';
           return OtpVerificationPage(
-              typeofVerification: typeofVerification, data: data);
+              typeofVerification: typeofVerification, data: data, verificationId: '',);
         },
       ),
       GoRoute(

@@ -12,6 +12,7 @@ class EmailSignupPage extends StatefulWidget {
 }
 
 class _EmailSignupPageState extends State<EmailSignupPage> {
+  final String typeofVerification="email";
   // TextEditingController _emailController = new TextEditingController();
   // TextEditingController _passwordController = new TextEditingController();
   // TextEditingController _confirmpasswordController =
@@ -226,7 +227,7 @@ class _EmailSignupPageState extends State<EmailSignupPage> {
                     minimumSize: Size(double.infinity, 50),
                   ),
                   onPressed: () { 
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpVerificationPage(typeofVerification: 'Email', data: '',)));
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>OtpVerificationPage(typeofVerification: 'Email', data: '', verificationId: '',)));
                    },
                   child: Text(
                     "Continue",
